@@ -1,6 +1,6 @@
 # [Kodilla](https://kodilla.com/pl) Fullstack Developer Bootcamp 2023 Review
 
-## Moduł: 0
+## 0. Witamy w bootcampie online!
 
 ### 0.1 Ogólne informacje
 
