@@ -1,4 +1,4 @@
-## 1. odstawy HTML, CSS i Sass
+## 1. Podstawy HTML, CSS i Sass
 
 ### 1.1 Wstęp do HTML
 > HTML (HyperText Markup Language) - język służący do budowy stron internetowych.  Pozwala na porządkowanie i nadawanie znaczenia dla treści na stronie. Używa się go podziału strony na nagłówki, sekcje, akapity etc.
