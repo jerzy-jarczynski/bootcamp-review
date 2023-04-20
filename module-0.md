@@ -1,6 +1,6 @@
-## 0. Witamy w bootcampie online!
+# 0. Witamy w bootcampie online!
 
-### 0.1 Ogólne informacje
+## 0.1 Ogólne informacje
 
 Jak się uczyć:
 - Staraj się dokładnie zrozumieć przeczytane materiały
@@ -14,7 +14,7 @@ Jak się uczyć:
 
 > Najważniejszą umiejętnością programisty, cenioną zarówno przez pracodawców, jak i współpracowników, jest przede wszystkim **myślenie** – rozumiane jako umiejętność zadawania pytań, szukania odpowiedzi w różnych źródłach i zastosowania odpowiedzi w budowanym rozwiązaniu.
 
-### 0.2 Przygotuj się
+## 0.2 Przygotuj się
 
 Taktyki dotyczące wyszukiwania:
 - komunikaty o błędach wklejać do wyszukiwarki w cudzysłowach lub bez w zależności od otrzymanych wyników wyszukiwania;
@@ -22,12 +22,12 @@ Taktyki dotyczące wyszukiwania:
 - należy weryfikować otrzymane wyniki i nie zadowalać się pierwszą wyszukaną stroną;
 
 Zaufane źródła informacji - Web Dev:
-- [StackOverflow](https://stackoverflow.com/) - rady i rozwiązania społeczności programistów
-- [Mozilla Developer Network](https://developer.mozilla.org/en-US/) - dobrze opisana i zorganizowana dokumentacja technologii Web
-- [CSS Tricks](http://css-tricks.com/) - rozbudowana baza wiedzy dotyczącej rozwiązań związanych z technologiami Web
-- [CanIUse.com](http://caniuse.com/) - strona pozwalająca na weryfikacje, czy dane właściwości są wspierane w przeglądarkach
-- [Kodilla](http://kodilla.com/) - blog, dokumentacja i kursy
+- [**StackOverflow**](https://stackoverflow.com/) - rady i rozwiązania społeczności programistów
+- [**Mozilla Developer Network**](https://developer.mozilla.org/en-US/) - dobrze opisana i zorganizowana dokumentacja technologii Web
+- [**CSS Tricks**](http://css-tricks.com/) - rozbudowana baza wiedzy dotyczącej rozwiązań związanych z technologiami Web
+- [**CanIUse.com**](http://caniuse.com/) - strona pozwalająca na weryfikacje, czy dane właściwości są wspierane w przeglądarkach
+- [**Kodilla**](http://kodilla.com/) - blog, dokumentacja i kursy
 
-[Żółta gumowa kaczuszka](https://pl.wikipedia.org/wiki/Metoda_gumowej_kaczuszki)
+[**Żółta gumowa kaczuszka**](https://pl.wikipedia.org/wiki/Metoda_gumowej_kaczuszki)
 
 > połóż kaczuszkę przy komputerze, a następnie przeczytaj swój kod, linijka po linijce, na głos tłumacząc kaczuszce, co każda z nich powinna robić.
