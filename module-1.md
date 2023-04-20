@@ -1,4 +1,6 @@
-## 1. Podstawy HTML, CSS i Sass
+# [Kodilla](https://kodilla.com/pl) Fullstack Developer Bootcamp 2023 Review
+
+## 1. - Podstawy HTML, CSS i Sass
 
 ### 1.1 Wstęp do HTML
 > HTML (HyperText Markup Language) - język służący do budowy stron internetowych.  Pozwala na porządkowanie i nadawanie znaczenia dla treści na stronie. Używa się go podziału strony na nagłówki, sekcje, akapity etc.
@@ -30,9 +32,9 @@ Budowa tagu HTML:
 - obraz: `<img src="image.jpg" alt="image" title="This is an image">`
 - lista nieuporządkowana: 
 ```html
-<ul>
-	<li>Element listy</li>
-	<li>Element listy</li>
-	<li>Element listy</li>
-</ul>
+	<ul>
+		<li>Element listy</li>
+		<li>Element listy</li>
+		<li>Element listy</li>
+	</ul>
 ```
