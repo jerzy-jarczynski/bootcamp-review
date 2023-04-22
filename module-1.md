@@ -310,3 +310,215 @@ Zapis z gwiazdką (ang. *asterisk*) oznacza "wszystkie elementy". Kolejne selekt
 > Najczęściej wykorzystywanym jest zapis heksadecymalny.
 
 ### Zmienne SCSS
+
+Składnia dla zmiennej w SCSS prezentuje się następująco:
+
+```scss
+$color-main: #ff5e57;
+```
+
+Nazwa zmiennej rozpoczyna się od znaku dolara `$`. Po dwukropku podaje się wartość. Następnie zmienną można wykorzystać:
+```scss
+p {
+	color: $color-main;
+}
+```
+W przypadku zastosowania tej samej zmiennej w wielu stylach, wartość będzie można zmienić tylko w jednym miejscu.
+
+### Pozycje elementów w CSS
+
+> Pozycję w SCSS/CSS definiuje się za pomocą właściwości `position`, która może przyjąć jedną z 4 wartości:
+> - static
+> - relative
+> - absolute
+> - fixed
+> 
+> Pozycja `static` to wartość domyślna elementu. Taki element będzie wyświetlany zgodnie z normalnym przepływem strony (ang. *normal flow of the page*).
+> Pozycje o pozostałych wartościach pozwalają na kontrolowanie elementu za pomocą właściwości `top`, `right`, `bottom` i `left`.
+> W przypadku `relative` element zostanie wypozycjonowany w odniesieniu do swojej naturalnej pozycji na stronie.
+> `absolute` pozwala na pozycjonowanie względem elementu nadrzędnego.
+> `fixed` umożliwia pozycjonowanie elementu względem okna przeglądarki
+>
+> Element może być również pozycjonowany za pomocą wartości `sticky`. Taki element przyjmuje pozycję `relative` aż do przewinięcia strony, wówczas przyjmuje pozycję `fixed`. Przed zastosowanie tej pozycji warto sprawdzić wsparcie w przeglądarkach.
+
+### Wyśrodkowanie elementu absolutnego
+
+> Do wyśrodkowania elementu o pozycji `absolute` w obu osiach można posłużyć się poniższym kodem:
+
+```css
+element {
+	position: absolute;
+	width: 100%;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%,-50%);
+}
+```
+ > Połączenie `top: 50%;`, `left: 50%;` i `transform: translate(-50%, -50%);` umieszcza element dziecko z pozycją `absolute` na środku elementu rodzica o pozycji `relative`.
+
+### Pseudoelementy HTML
+
+Każdy element HTML ma swój pseudoelement poprzedzający `before` i następujący po elemencie `after`.
+Żeby "aktywować" pseudoelement należy wykorzystać właściwość `content`, np.:
+```css
+div#test {
+	position: relative;
+}
+
+div#test::before, div#test::after {
+	position: absolute;
+	content: '';
+}
+```
+Wykorzystanie pseudoelementów pozwala na odciążenie struktury HTML poprzez ograniczenie ilości zwykłych elementów w kodzie.
+
+### DRY - Do not Repeat Yourself
+DRY to dobra praktyka polegająca na unikaniu powtarzania tego samego kodu. Ma zastosowanie w wielu technologiach. Poniżej przykład zastosowania w CSS:
+```css
+/* przed zastosowaniem DRY */
+p.foo {
+	text-align: center;
+	font-size: 20px;
+	color: black; /* default */
+	letter-spacing: 5px;
+}
+
+p.bar {
+	text-align: center;
+	font-size: 20px;
+	color: yellow;
+	letter-spacing: 5px;	
+}
+```
+***
+```css
+/* po zastosowaniu DRY */
+p {
+	text-align: center;
+	font-size: 20px;
+	letter-spacing: 5px;
+}
+
+.bar {
+	color: yellow;
+}
+```
+
+### Walidacja HTML
+
+Walidacja kodu pozwala na zweryfikowanie, czy nie zastosowano błędnych, przestarzałych lub niezgodnych z treścią zapisów.
+Walidację można przeprowadzić np. na poniższej stronie, wklejając kod HTML do formularza:
+
+[**W3C Markup Validation Service**](https://validator.w3.org/)
+
+Walidator wyświeli na czerwono komunikaty o błędach `Error` i na żółto komunikaty ostrzeżenia `Warning`.
+
+### Wybór czcionki
+
+W internecie znajduje się wiele kolekcji czcionek do wykorzystania na stronach internetowych. Jednym z najpopularniejszych jest [**Google Fonts**](https://www.google.com/fonts). 
+
+Do podłączenia wybranego na stronie kroju czcionki należy posłużyć się elementem `link`, który należy dodać w sekcji `head`, przed arkuszem ze stylami.
+
+```html
+<head>
+	<!-- linki wymagane przez Google Fonts -->
+	<link rel="preconnect" href="https://fonts.googleapis.com">  
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>  
+	<link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@400;600;700;900&display=swap" rel="stylesheet">
+	<!-- arkusz styli poniżej -->
+	<link href="style.css" rel="stylesheet">
+</head>
+```
+Link do czcionki można też dodać w arkuszu styli:
+```css
+@import url('https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@400;600;700;900&display=swap');
+```
+Po podłączeniu arkusza czcionki lub czcionek wystarczy ustawić odpowiednią wartość właściwości `font-family` dla wybranego elementu.
+```css
+p {
+	font-family: 'Source Sans Pro', sans-serif;
+}
+```
+Wartość `font-family` warto umieścić w zmiennej SCSS:
+```scss
+$font-main: 'Source Sans Pro', sans-serif;
+
+p {
+	font-family: $font-main;
+}
+```
+> **Fallback** - zapis `sans-serif` po przecinku sprawi, że w przypadku, kiedy przeglądarka nie będzie mogła zastosować pierwszej wskazanej czcionki, nastąpi przełączenie na kolejną dostępną spośród wskazanych.
+
+### Dopasowanie obrazu do kontenera
+
+Właściwość, która kontroluje wyświetlanie obrazu wewnątrz kontenera to `object-fit`. Jedną z dostępnych wartości jest `cover`. Obraz wykorzystujący tą właściwość dopasowuje rozmiar do wielkości kontenera zachowując jednocześnie swoje proporcje.
+
+### Warstwy
+
+Do kontrolowania warstw na stronie, które powstają w wyniku zmiany domyślnej pozycji elementów służy właściwość `z-index` o dowolnej wartości numerycznej (liczby całkowite).
+
+```scss
+p#foo {
+	display: block;
+	widht: 500px;
+	height: 200px;
+	background: yellow;
+	position: relative;
+	z-index: 1;
+}
+
+p#foo::before {
+	display: block;
+	content: '';
+	width: 50px;
+	height: 50px;
+	background: red;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	z-index: 111;
+}
+```
+
+W powyższym przykładzie pseudoelement `::before` wyświetli się w formie czerwonego kwadratu na środku żółtego prostokąta-rodzica (`p#foo`).
+Gdyby wartość `z-index` pseudoelementu była mniejsza od wartości zadeklarowanej dla rodzica, pseudoelement nie byłby widoczny (zostałby przykryty).
+
+### Gotowy projekt
+
+[**Projekt portfolio HTML/SCSS**](https://codepen.io/jerzyjarczynski/pen/mdjrGqQ)
+
+## Przydatne materiały
+
+**Dokumentacje**
+
+-   [HTML Reference](https://htmlreference.io/)
+-   [CSS Reference](https://cssreference.io/)
+
+**Poradniki**
+
+-   [Wprowadzenie do HTML na stronie MDN](https://developer.mozilla.org/en-US/docs/Learn/Getting_started_with_the_web/HTML_basics)
+-   [Wprowadzenie do CSS na stronie MDN](https://developer.mozilla.org/en-US/docs/Learn/CSS)
+
+**Walidatory**
+
+-   [Walidator HTML](https://validator.w3.org/)
+-   [Walidator CSS](https://jigsaw.w3.org/css-validator/)
+
+**Palety kolorów**
+
+-   [Flat UI Colors](https://flatuicolors.com/)
+-   [Paletton](http://paletton.com/)
+-   [Colormind](http://colormind.io/)
+-   [uiGradients](https://uigradients.com/)
+
+**Darmowe zdjęcia**
+
+-   [Pexels](https://www.pexels.com/)
+-   [Unsplash](https://unsplash.com/)
+-   [Pixabay](https://pixabay.com/)
+-   [StockSnap](https://stocksnap.io/)
+
+**Inne**
+
+-   [Can I Use...](https://caniuse.com/)  - na tej stronie możesz sprawdzić, które przeglądarki wspierają poszczególne właściwości/elementy HTML i CSS
