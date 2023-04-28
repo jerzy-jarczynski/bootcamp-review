@@ -1,3 +1,4 @@
+
 # 2. Praktyka CSS i RWD
 
 ## 2.1 Inspektor
@@ -334,3 +335,157 @@ background-image: linear-gradient(45deg, #f1c40f 50%, transparent 50%);
 ### Stopka
 
 Dobrą praktyką podczas dodawania linków do portali społecznościowych z samymi ikonami jest dodawanie nazw portali, które następnie można ukryć w stylach np. za pomocą `font-size: 0;`. Jest to zabieg ułatwiający interpretowanie strony np. w czytnikach dla niewidomych.
+
+## 2.8.  Responsywny layout
+
+**AWD** - **A**daptive **W**eb **D**esign to podejście tworzenia stron mobilnych opierające się na przekierowaniu użytkownika na osobną stronę zazwyczaj w subdomenie `m.` lub `mobile.`
+
+**RWD** - **R**esponsive **W**eb **D**esign to podejście polegające na dostosowywaniu strony do urządzenia, na którym jest wyświetlana. W RWD nie tworzy się osobnej strony, a jedynie dodatkowe reguły CSS, które pozwalają na poprawne wyświetlanie strony w zależności od urządzenia użytkownika.
+
+### Dwie drogi w RWD
+
+1. #### Graceful degradation
+	Czyli desktop first. Na początku tworzymy stronę w wersji na monitory o dużej rozdzielczości. Następnie dostosowujemy stronę do urządzeń mobilnych:
+	```css
+	/* Desktop layout */
+	h1 {
+		font-size: 30px;
+		margin: 30px auto;
+		text-align: center;
+	}
+
+	p {
+		font-size: 20px;
+		margin: 20px auto;
+		text-align: left;
+	}
+
+	/* Mobile layout */
+	@media(max-width: 1000px) {
+		h1 {
+			font-size: 20px;
+			margin: 20px auto;
+		}
+
+		p {
+			font-size: 15px;
+			margin: 10px auto;
+		}
+	}
+
+	@media(max-width: 500px) {
+		/* continue styling */
+	}
+
+	/* other media queries */
+	```
+
+2. #### Progressive enhancement
+	Mobile first. Polega na przygotowaniu wersji mobilnej w pierwszej kolejności, następnie na dostosowaniu wyglądu strony do ekranów o większych rozdzielczościach.
+	```css
+	/* Mobile layout */
+	h1 {
+		font-size: 16px;
+		margin: 15px auto;
+		text-align: center;
+	}
+
+	p {
+		font-size: 14px;
+		margin: 10px auto;
+		text-align: left;
+	}
+
+	/* Desktop layout */
+	@media(min-width: 500px) {
+		h1 {
+			font-size: 20px;
+			margin: 20px auto;
+		}
+
+		p {
+			font-size: 16px;
+			margin: 15px auto;
+		}
+	}
+
+	@media(min-width: 1000px) {
+		h1 {
+			font-size: 30px;
+			margin: 30px auto;
+		}
+
+		p {
+			font-size: 20px;
+			margin: 20px auto;
+		}
+	}
+
+	/* other media queries */
+	```	
+
+### Viewport
+
+Viewport to część strony, która jest w danym momencie widoczna na ekranie użytkownika. Wielkość viewport jest wprostproporcjonalna do wielkości ekranu.
+
+Określenie wielkości viewport pozwala osiągnąć stan, w którym po wejściu na stronę na urządzeniu o mniejszym ekranie strona nie będzie powiększona i dostosuje się do wielkości tego urządzenia (100% szerokości urządzenia).
+
+Do kontrolowania viewport na stronie dodaje się poniższy meta tag HTML w sekcji `head`:
+
+```html
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+```
+
+- `content="width=device-width` ustawia szerokość strony na dopasowaną do szerokości ekranu urządzenia;
+- `initial-scale=1.0` - ustawia początkowy poziom powiększenia na urządzeniach mobilnych;
+
+### Media queries
+
+Media queries to instrukcje warunkowe w CSS, którą mówią przeglądarce, żeby dane style były aktywne przy wskazanym rozmiarze ekranu.
+
+```css
+@media (min-width: 768px) {
+	.foo {
+		width: 100%;
+		height: 200px;
+	}
+}
+```
+
+Media query składa się z poniższych elementów:
+- `@media` - wyrażenie rozpoczynające deklarację media query;
+- `(min-width: 1000px)`/`(max-width: 1000px)` - warunki, które muszą zostać spełnione, żeby reguły zostały zastosowane;
+- `{}` - ciało media query zamknięte w nawiasach klamrowych;
+- reguły CSS, które mają zostać zastosowane;
+
+### Dostosowujemy stronę do mobile
+
+[**Responsive Design Checker**](https://responsivedesignchecker.com/) - jedna z dostępnych w sieci stron internetowych pozwalająca na podgląd strony na różnych urządzeniach (tego typu podgląd jest również dostępny w Inspektorze).
+
+#### Ułożenie elementów w kolumnach
+
+`flex-direction: column;` <- zastosowanie tej reguły pozwala w łatwy sposób zmienić wyświetlanie elementów flex w kolumnie.
+
+#### Poprawiamy obrazki
+
+#### Dodajemy odstępy
+
+### Ostatnie poprawki
+
+### Zadanie:  Wyślij projekt do sprawdzenia
+
+[**Hello, we're creatively**](https://codepen.io/jerzyjarczynski/pen/yLqXjjq) - odnośnik do wykonanego zadania na CodePen.io
+
+## 2.9.  Podsumowanie
+
+Linki do materiałów do pracy własnej:
+
+**Flexbox**
+- [A Complete Guide to Flexbox](https://css-tricks.com/snippets/css/a-guide-to-flexbox/)
+- [Flexyboxes](http://the-echoplex.net/flexyboxes/)
+
+**Animacje**
+- [CSS Almanac: Transform](https://css-tricks.com/almanac/properties/t/transform/)
+- [Hover Effect Ideas](https://tympanus.net/Development/HoverEffectIdeas/)
+
+[**Nadpisywanie CSS**](https://www.youtube.com/watch?v=I6kWdxpezNE&ab_channel=Kodilla.com)
