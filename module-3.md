@@ -1,3 +1,4 @@
+
 # 3. Bootstrap
 
 ## 3.1.  Frameworki
@@ -271,6 +272,8 @@ Powyższa struktura składa się z poniższych elementów:
 
 ### Carousel
 
+Do prawidłowego działania tego komponentu niezbędne jest podłączenie do strony skryptu JavaScript (link wcześniej w notatce).
+
 ```html
 <div id="main-slider" class="carousel slide carousel-fade" data-bs-ride="carousel" data-bs-interval="4000">
 	<div class="carousel-inner">
@@ -309,3 +312,96 @@ Powyższa struktura składa się z poniższych elementów:
 	</button>
 </div>
 ```
+
+Powyższa struktura składa się z poniższych elementów:
+- `<div id="main-slider" class="carousel slide carousel-fade" data-bs-ride="carousel" data-bs-interval="4000">`
+	- kontener karuzeli z id `main-slider` i klasą `carousel`. Klasy `slide carousel-fade` odpowiadają za efekty przełączania elementów karuzeli.
+	- atrybuty `data-bs-ride="carousel" data-bs-interval="4000"` są wykorzystywane przez skrypt JS. Drugi definiuje czas wyświetlania pojedynczego slajdu w milisekundach.
+- `<div class="carousel-inner">` kontener przechowujący slajdy karuzeli.
+- `<div class="carousel-item active">` element pojedynczego slajdu karuzeli. Klasa `active` definiuje, który slajd będzie wyświetlany jako pierwszy.
+- `<div class="carousel-caption">` - element pozwalający na umieszczenie dodatkowej treści (tekstu, przycisku etc.).
+- `<button type="button" class="carousel-control-prev carousel-control" href="#main-slider" data-bs-slide="prev">` - kontrolka sterująca karuzelą. Ważne, aby a atrybucie `href` wskazać `id` karuzeli. Atrybut `data-bs-slide="prev"` przyjmuje wartości `prev` lub `next` i określa funkcję zmiany slajdu przycisku.
+- `<span class="carousel-control-prev-icon" aria-hidden="true"></span>` - element domyślnie wystylizowany w formie strzałki w lewo lub w prawo (tutaj w lewo).
+- `<span class="visually-hidden">Previous</span>` - element zwiększający dostępność (accessibility) dla np. czytników dla niewidomych. Domyślnie ukryty.
+
+### Sekcja: dwie kolumny
+
+#### Pierwsza kolumna
+
+```html
+<div class="list-group flex-sm-row flex-lg-column">
+	<a class="list-group-item list-group-item-action" href="#">
+		Vivamus
+	</a>
+	<a class="list-group-item list-group-item-action" href="#">
+		Etiam
+	</a>
+	<a class="list-group-item list-group-item-action" href="#">
+		Praesent
+	</a>
+	<a class="list-group-item list-group-item-action" href="#">
+		Aenean
+	</a>
+	<a class="list-group-item list-group-item-action" href="#">
+		Vestibulum
+	</a>
+</div>
+```
+
+W powyższym przykładzie zastosowano [komponent **List group**](https://getbootstrap.com/docs/5.1/components/list-group/).
+
+- `<div class="list-group flex-sm-row flex-lg-column">` kontener na wszystkie elementy List group. Pozostałe klasy odpowiadają za style dotyczące flexboxa w zależności od wielkości ekranu.
+- `<a class="list-group-item list-group-item-action" href="#">` element składowy List group. Klasa `list-group-item-action` pozwala na dodanie stylów dla pseudoklas dostępnych dla linków i przycisków.
+
+#### Druga kolumna
+
+Wykorzystanie [komponentu **Card**](https://getbootstrap.com/docs/5.1/components/card/).
+
+```html
+<div class="card">
+	<div class="card-image">
+		<img src="https://i.postimg.cc/sD60Q9Y0/4.jpg" alt="">
+	</div>
+	<div class="card-body">
+		<h5>
+			Phasellus rhoncus
+		</h5>
+		<a href="#" class="btn custom-btn">
+			Add to cart
+		</a>
+	</div>
+</div>
+```
+
+- `<div class="card">` kontener dla komponentu Card.
+- `<div class="card-image">` - górna sekcja karty przechowująca obrazek. (niezgodność z dokumentacją komponentu)
+- `<div class="card-body">` - dolna sekcja karty przechowująca dowolną treść (tekst, przycisk etc.).
+
+### Sekcja: trzy kafelki w dwóch rzędach
+
+### Sekcja: karty z dwiema kolumnami
+
+### Sekcja: trzy kolumny zmieniające kolejność
+
+### Sekcja: stopka
+
+### Ostatnie poprawki
+
+### Dla chętnych: stylowanie
+
+### Zadanie:  wyślij projekt do Mentora!
+
+[**Bootstrap landing**](https://github.com/jerzy-jarczynski/bootstrap-landing) - odnośnik do wykonanego zadania na GitHub
+
+## 3.6.  Podsumowanie
+
+**Flexbox**
+
+-   [Flexbox Froggy](http://flexboxfroggy.com/)  – zabawna gra, gdzie poruszasz bohaterem wykorzystując deklaracje flexboksa
+-   [Flexbox Defense](http://www.flexboxdefense.com/)  – gra, gdzie dowodzisz obroną, ustawiając działa za pomocą flexboksa!
+-   [Flexbox Tester](https://www.madebymike.com.au/demos/flexbox-tester/)  – interaktywne wyjaśnienie działania właściwości  `flex`  (`flex-grow`,  `flex-shrink`,  `flex-basis`)
+
+**Bootstrap**
+
+-   [Bootsnipp](https://bootsnipp.com/)  – kolekcja elementów napisanych z wykorzystaniem Bootstrapa
+-   [Bootstrap 5 Tutorial](https://www.quackit.com/bootstrap/bootstrap_5/tutorial/)  – interaktywne przykłady komponentów Bootstrapa
