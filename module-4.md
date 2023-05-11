@@ -261,4 +261,121 @@ Dobrą praktyką jest dodawnia commita po każdym wykonanym zadaniu. Można przy
 	- dodanie stopki -> commit;
 	- etc.
 
-### Zadanie:  pierwsze samodzielne commity 
+### Zadanie:  pierwsze samodzielne commity
+
+**[Monty Python Landing Repo](https://github.com/jerzy-jarczynski/monty-python-landing/commits/master)** - link do repozytorium przykładowej strony, utworzonej na potrzeby nauki Gita
+
+**[Moty Python Landing Demo](https://codepen.io/jerzyjarczynski/pen/WNKJGZY)** - link do demo przykładowej strony, utworzonej na potrzeby nauki Gita
+
+**[Monty Python Git Screenshots](https://drive.google.com/drive/folders/1B4TMyScMypqqBYEPwSi7Tmv-etrwPuGI?usp=sharing)** - link do zrzutów ekranu pierwszych commitów
+
+## 4.4.  Git – repozytorium zdalne
+
+### Github, Gitlab, Bitbucket
+
+Bywa tak, że firmy developerskie posiadają własne serwery przeznaczone do utrzymywania repozytoriów zdalnych.
+Innym rozwiązaniem są platformy udostępniające odpłatnie lub za darmo zdalne repozytoria Gita na swoich serwerach. Najpopularniejsze z nich to:
+- **[GitHub](https://github.com/)**
+- **[GitLab](https://about.gitlab.com/)**
+- **[BitBucket](https://bitbucket.org/)**
+
+> Podczas kursu zostanie wykorzystany Github.
+>Do celów edukacyjnych można korzystać z repozytoriów publicznych. Żeby uzyskać do nich dostęp wystarczy udostępnić link.
+> Do celów komercyjnych można korzystać z repozytoriów prywatnych.
+
+### Konfiguracja: klucze SSH
+
+Publiczne repozytorium jest dostępne dla każdego wyłącznie **do odczytu**. W celu dodawania commitów niezbędna jest **autoryzacja**.
+
+Żeby uniknąć każdorazowego wpisywania hasła, warto skonfigurować klucze SSH.
+
+Klucze to specjalnie wygenerowane ciągi znaków, które będą przechowywane w dwóch plikach:
+- id_ed25519.pub - plik dla **klucza publicznego**;
+- id_ed25519 - plik dla **klucza prywatnego**;
+
+Klucz publiczny może być przekazany każdemu. Służy do zaszyfrowania tesktu.
+Klucz prywatny musi być przechowywany w tajemnicy. Służy do odszyfrowania tesktu.
+
+#### Sprawdzenie, czy klucze SSH już istnieją
+
+Sprawdzenie, czy na maszynie lokalnej znajdują się już wygenerowane wcześniej klucze SSH:
+
+```markup
+ls -al ~/.ssh
+```
+
+Jeśli wyświetli się błąd lub pusty katalog, klucze nie istnieją na komputerze.
+
+Jeśli polecenie wyświetla pliki kluczy, klucze zostały już wcześniej utworzone i nie trzeba ich generować od zera.
+
+#### Generowanie kluczy SSH
+
+W pierwszej kolejności należy wywołać poniższą komendę, podająć w argumencie własny adres e-mail:
+```markup
+ssh-keygen -t ed25519 -C "adres@example.com"
+```
+
+Skrypt zapyta o docelową lokalizację dla utworzonych plików. Wciśnięcie `Enter` wybiera lokalizację domyślną.
+
+W kolejnym kroku skrypt zapyta o hasło do klucza prywatnego. Wciśnięcie `Enter` zatwierdza puste hasło.
+
+Ostatnim krokiem jest potwierdzenie hasła. W przypadku pustego hasła wystarczy wcisnąć `Enter`. W tym kroku zostanie wyświetlona lokalizacja kluczy na komputerze.
+
+#### Konfiguracja kluczy SSH w GitHubie
+
+Na stronie GitHub, po zalogowaniu, należy pokonać poniższą ścieżkę:
+
+*GitHub ⇒ Ustawienia ⇒ Klucze SSH i GPG ⇒ Klucze SSH ==> Dodaj nowy klucz*
+
+W polu **Tytuł** należy wprowadzić dowolną treść. Tytuł służy do rozróżnienia kluczy, kiedy jest dodana ich większa ilość.
+
+W polu **Klucz** należy podać zawartość pliku z wygenerowanym wcześniej kluczem publicznym.
+
+Po wszystkim wystarczy zatwierdzić dodanie nowego klucza.
+
+### Zakładanie repozytorium na GitHubie
+
+Każdy projekt powinien mieć własne repozytorium.
+
+#### Konfiguracja w panelu GitHuba
+
+Na stronie głównej GitHub należy wybrać opcję **Start a project**.
+
+W wyświetlonym formularzu wystarczy wprowadzić nazwę nowego repozytorium bez automatycznego dodawania plików `README.md` oraz `.gitignore`.
+
+Po zatwierdzeniu formularza wyświetli się ekran z komunikatami konfiguracyjnymi.
+
+W pierwszej sekcji *Quick setup* należy zaznaczyć opcję **SSH**.
+
+> Należy unikać sytuacji, w której podłącza się 2 repozytoria zawierającego wcześniej commity. Połączenie takich repozytoriów jest problematyczne.
+>
+> Należy trzymać się zasady, że jedno z dwóch repozytoriów powinno być puste przed podłączeniem.
+
+#### Podłączanie repozytorium zdalnego do lokalnego
+
+Polecenie `git remote add` ze wskazaną nazwą repozytorium dodaje zdalne repozytorium do lokalnego.
+
+Polecenie `git remote -v` pozwala sprawdzić listę dodanych serwerów.
+
+> Repozytorium lokalne może być synchronizowane z wieloma repozytoriami zdalnymi. Przyjęło się, że główne repozytorium zdalne w projekcie nazywa się *origin*.
+
+Polecenie `git push -u origin master` przesyła dotychczasowe zmiany z repozytorium lokalnego do zdalnego.
+
+Po pomyślnym przesłaniu zmian, commity powinny być widoczne po odświeżeniu repozytorium na GitHub.
+
+#### Alternatywa do podłączania — klonowanie repozytorium
+
+**Klonowanie** stosuje się tylko w przypadku, w którym istnieje repozytorium zdalne, ale nie istnieje repozytorium lokalne na komputerze.
+
+Skopiowany adres repozytorium należy wkleić do komendy
+```markup
+git clone adres-repozytorium
+```
+
+Wywołanie komendy `git clone` skutkuje:
+- utworzeniem katalogu projektu;
+- zainicjowaniem repozytorium;
+- dodaniem adresu zdalnego repozytorium;
+- pobraniem zmian z serwera;
+
+### Podłączanie repo — podsumowanie
