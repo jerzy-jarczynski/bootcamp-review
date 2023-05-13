@@ -1,3 +1,4 @@
+
 # 4. Narzędzia developerskie
 
 ## 4.1.  Wprowadzenie
@@ -379,3 +380,96 @@ Wywołanie komendy `git clone` skutkuje:
 - pobraniem zmian z serwera;
 
 ### Podłączanie repo — podsumowanie
+
+<br>
+
+**Nowy projekt - brak repozytorium - brak plików**
+1. Nowe repozytorium na GitHub, można zaznaczyć dodatkowe opcje
+2. Sklonowanie repozytorium do maszyny lokalnej
+```markup
+git clone adres-repozytorium
+```
+
+<br>
+
+**Repozytorium istnieje na maszynie lokalnej**
+1. Nowe (puste!) repozytorium na GitHub - tylko nazwa repozytorium
+2. Podłączenie repozytorium zdalnego do lokalnego
+```markup
+git remote add origin adres-repozytorium
+``` 
+3. Wysłanie pierwszych commitów do repozytorium zdalnego
+```markup
+git push -u origin master
+```
+
+<br>
+
+**Brak repozytorium lokalnego - istnieją pliki projektu na maszynie lokalnej**
+
+1. Wykorzystanie pierwszego sposobu, przeniesienie plików do katalogu sklonowanego repozytorium
+2. Zainicjowanie repozytorium w katalogu projektu `git init`, dodanie commita, wykorzystanie drugiego sposobu
+
+### Podstawowe komendy Gita
+
+#### Push, czyli wysyłamy nasze zmiany na zdalne repo
+
+`git push` - wysłanie commitów do zdalnego repozytorium
+
+`git remote add adres-repozytorium` - podłączenie adresu repozytorium zdalnego
+
+`git push -u origin main/master` - pierwsze użycie komendy `push` po dodaniu repozytorium zdalnego
+
+#### Pull, czyli pobieramy zmiany ze zdalnego repo
+
+`git pull` - odwrotność komendy `push`, pobieranie zmian z repozytorium zdalnego
+
+### Zadanie:  pierwsze repozytorium na GitHubie
+
+**[Link do repozytorium wykonanego zadania](https://github.com/jerzy-jarczynski/nauka-gita.git)**
+
+## 4.5.  NPM - rozpoczęcie pracy w projekcie
+
+### Czym jest manager pakietów?
+
+**Manager pakietów** - w zależności od potrzeby pozwala na dodawanie do projektu narzędzi wspomagających pracę. W przypadku narzędzi wymagających doinstalowania dodatkowych pakietów, manager samodzielnie dokona instalacji dodatkowych zależności.
+
+Manager pakietów ułatwia pracę zespołową. Wystarczy współdzielić ten sam plik konfiguracyjny, żeby każdy developer miał dostęp do tych samych narzędzi do pracy nad projektem. W przypadku dołączania do projektu, taki plik wystarczy pobrać ze zdalnego repozytorium i wykonać jedną komendę służącą do instalacji.
+
+W kursie korzysta się z managera pakietów **NPM** - NodeJS Package Manager.
+
+Przykłady zastosowań dla narzędzi, które można zainstalować za pomocą NPM:
+- sprawdzanie poprawności kodu;
+- łączenie i minifikacja plików;
+- wstawianie fragmentów kodu;
+- dodawanie wymaganych prefiksów dla styli CSS;
+- kasowanie niepotrzebnych plików np. pustych arkuszy styli;
+- tworzenie paczki .zip projektu;
+- automatyczne odświeżanie strony po zapisywaniu zmian w plikach;
+
+### Czym jest task runner?
+
+![image](https://uploads.kodilla.com/bootcamp/wdp/04/wd-7-1-11.png)
+
+**Task runner** służy do uruchamiania wielu narzędzi za pomocą jednej komendy.
+Task runner pozwala na przyspieszenie i automatyzację czynności, które muszą być wykonywane często.
+W kursie, do stworzenia task runnera zostaną wykorzystane **skrypty NPM**.
+
+### Alternatywne oprogramowanie
+
+Alternatywy dla Gita: **SVN**, **Mercurial**
+Alternatywne task runnery: **Grunt**, **Gulp**, **Webpack**
+
+Wybór narzędzi jest kwestią preferencji programisty lub wymagań projektu.
+
+### Instalacja Node.js
+
+NPM jest częścią Node.js
+
+`node -v` - sprawdza wersję Node.js, jeżeli jest zainstalowany.
+
+**[Pakiet instalacyjny Node.js](https://nodejs.org/en/download)**
+
+`sudo  npm  install npm@latest -g` - aktualizacja pakietu **npm**
+
+### Inicjalizacja NPM-a w projekcie
