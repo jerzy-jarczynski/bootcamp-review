@@ -473,3 +473,84 @@ NPM jest częścią Node.js
 `sudo  npm  install npm@latest -g` - aktualizacja pakietu **npm**
 
 ### Inicjalizacja NPM-a w projekcie
+
+W każdym projekcie należy jednorazowo nainicjować **NPM**.
+```markup
+npm init -y
+```
+Wynikiem wywołania powyższej komendy utworzy domyślny plik konfiguracyjny `package.json` w głównym katalogu projektu.
+
+Plik zawiera informacje między innymi o zainstalowanych pakietach.
+
+### Dodajemy plik .gitignore
+
+Plik **`.gitignore`** służy do wskazywania plików, które nie mają być przesyłane do zdalnego repozytorium.
+
+Do utworzenia tego pliku można wykorzystać udostępniony bezpłatnie przez GitHub szablon:
+
+https://github.com/github/gitignore/blob/main/Node.gitignore
+
+Komenda do utworzenia pliku:
+```markup
+touch .gitignore
+```
+
+### Instalujemy pierwszy pakiet — BrowserSync
+
+BrowserSync to pakiet, który obserwuje zmiany wprowadzane do projektu i automatycznie odświeża podgląd strony w przeglądarce.
+
+Instalacja:
+```markup
+npm install --save-dev browser-sync
+```
+
+Efektem będzie instalacja pakietu i dodanie wpisu do `package.json` w sekcji *dependencies*.
+To umożliwi instalacje tego pakietu przez innego developera po dołączeniu do projektu.
+
+### BrowserSync — pierwsze uruchomienie
+
+Uruchomienie BrowserSync:
+```markup
+node_modules/.bin/browser-sync start --server --files "css/*.css" "*.html"
+```
+
+BrowserSync otworzy podgląd w domyślnej przeglądarce pod adresem `http://localhost:3000/`. Numer portu może być inny.
+
+Uruchomiony BrowserSync umożliwia dodatkowy adres, który umożliwia podgląd projektu na innych urządzeniach połączonych do tej samej sieci.
+
+### Zadanie:  instalacja i uruchamianie pakietów
+
+[html-validate](https://html-validate.org/usage/index.html) - paczka sprawdzająca poprawność kodu HTML
+
+## 4.6.  NPM - budujemy własny task runner
+
+W task runnerze definiuje się różne scenariusze nazywane taskami. Najczęściej spotykanymi są:
+- `build` - konwersja plików źródłowych na te, które zostaną wykorzystane w wersji do publikacji. 
+- `watch` - obserwowanie zmian i wykonywanie potrzebnych operacji w locie.
+- `test` - sprawdzanie poprawności kodu.
+
+Każdy task może uruchamiać również inne taski i składać się z podtasków np. `test:html` itp.
+
+### Struktura task runnera
+
+- `init-project`
+	- instalacja niezbędnych pakietów
+	- stworzenie pożądanej struktury katalogów
+	- stworzenie pliku `README.md`
+	- stworzenie pustych plików startowych
+	- pobranie i umiejscowienie pliku `.gitignore`
+- `test`
+	- sprawdzanie poprawności kodu
+-  `build`
+	- konwersja `.scss` do `.css`
+	- uruchomienie *Autoprefixera*
+	- minifikacja `.css`
+	- przetestowanie poprawności kodu
+- `watch`
+	- kompilowanie `.scss` do `.css` w locie
+	- dodawanie prefiksów w `.css`
+	- odświeżanie przeglądarki po zmianach w plikach projektu
+
+Task runner będzie umiejscowiony w pliku `package.json` w sekcji `scripts`.
+
+### Task 1: inicjalizacja projektu
