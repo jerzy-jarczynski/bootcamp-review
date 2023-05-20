@@ -554,3 +554,228 @@ Każdy task może uruchamiać również inne taski i składać się z podtasków
 Task runner będzie umiejscowiony w pliku `package.json` w sekcji `scripts`.
 
 ### Task 1: inicjalizacja projektu
+
+#### Instalacja niezbędnych pakietów
+
+Dołączając do istniejącego projektu nie należy wywoływać komendy `npm init -y`. W zamian wystarczy wywołać `npm install`, żeby zainstalować wszystkie pakiety wylistowane w pliku `package.json`.
+
+Dodawanie taska `init-project`:
+```json
+"init-project": "npm install"
+```
+
+#### Stworzenie katalogów
+
+Do stworzenia katalogów można wykorzystać **[pakiet mkdirp](https://www.npmjs.com/package/mkdirp)**.
+Uchroni to przed nadpisywaniem plików w projekcie.
+
+Instalacja `mkdirp`:
+```markup
+npm install mkdirp --save-dev
+```
+
+Utworzenie subtaska `init:dirs`:
+```json
+"init:dirs": "mkdirp sass css vendor images js"
+```
+
+Na potrzeby innych projektów lista utworzonych w ten sposób katalogów może być inna od powyższej.
+
+#### Stworzenie plików
+
+Dodanie subtaska `init:files` w celu uniknięcia dodawania plików startowych ręcznie w projekcie:
+```json
+"init:files": "touch README.md index.html sass/style.scss js/script.js"
+```
+
+#### Pobranie pliku .gitignore
+
+Pobranie pliku `.gitignore` za pomocą komendy `curl` z zasobów internetowych <- [szablon GitHub]:(https://github.com/github/gitignore/blob/master/Node.gitignore)
+
+```json
+"init:gitignore": "curl https://raw.githubusercontent.com/github/gitignore/master/Node.gitignore -o .gitignore"
+```
+
+> flaga `-o` w komendzie `curl` pozwala na nadawanie dowolnej nazwy dla pobranego pliku.
+
+#### Składając wszystko w całość
+
+Subtaski mogą uruchamiać się sekwencyjnie (jeden po drugim). Dla takiego zachowania task runnera można zastosować łącznik `AND` pod postacią operatora `&&`.
+
+Wywołanie subtasków w tasku `init-project`:
+```json
+"init-project": "npm install && npm run init:dirs && npm run init:files && npm run init:gitignore"
+```
+
+> Subtaski uruchamia się za pomocą komendy `npm run nazwa-taska`
+
+#### Optymalizacja taska
+
+W celu zbiorczego wywoływania subtasków można posłużyć się pakietem **[npm-run-all](https://www.npmjs.com/package/npm-run-all)**.
+
+Instalacja:
+```markup
+npm install npm-run-all --save-dev
+```
+
+Zastosowanie w `package.json`:
+```json
+"init-project": "npm install && npm-run-all init:*",
+```
+
+> Istostne jest wywołanie `npm install` w pierwszej kolejności w celu doinstalowania potrzebnych paczek przed wywołaniem subtasków za pomocą pakietu `npm-run-all`.
+
+### Task 2: testowanie plików
+
+Walidację HTML można osiągnąć korzystając z pakietu [html-validate](https://www.npmjs.com/package/html-validate).
+
+Dodanie subtaska `test:html`:
+```json
+"test:html": "html-validate *.html"
+}
+```
+> Modyfikując plik `package.json` należy mieć na uwadze przecinki. Po każdym elemencie zbioru. Przecinka nie stawia się po **ostatnim** elemencie zbioru.
+
+### Task 3: generowanie wersji produkcyjnej
+
+#### Kompilacja .scss do .css i minifikacja
+
+Instalacja pakietu **[sass](https://www.npmjs.com/package/sass)** do automatycznej konwersji `.scss` do `.css`.
+```markup
+npm install sass --save-dev
+```
+
+Subtask:
+```json
+"build:sass": "sass --style=compressed --no-source-map sass:css"
+```
+
+> Flaga `--style` z wartością `compressed` odpowiada za minifikację pliku `.css` po konwersji.
+
+#### Uruchomienie Autoprefixera
+
+Potrzebne pakiety:
+- `PostCSS` - łatwa modyfikacja plików `.css`
+- `PostCSS-cli` - modyfikacja z poziomu terminala
+- `Autoprefixer` - dodawanie wymaganych prefixów do `.css`
+
+Instalacja zbiorcza:
+```markup
+npm install autoprefixer@10.2.4 postcss-cli@8.3.1 postcss@8.2.6 --save-dev
+```
+
+Subtask:
+```json
+"build:autoprefixer": "postcss css/*.css --use autoprefixer -d css"
+```
+
+Wywołanie komendy znajduje wszystkie pliki z rozszerzeniem `.css` i wykonuje na nich narzędzie `autoprefixer`. Zmieniona wersja zastępuje pliki wejściowe.
+
+#### Budujemy  `build`
+
+Utworzenie tasku `build` z wywołaniem tasku `test`:
+```json
+"build": "npm-run-all build:* test"
+```
+
+#### Dodatkowy task  `build-dev`
+
+> **Source map** - mapa źródeł może być tworzona w momencie generowania pliku `.css` za pomocą prekompilatora.
+> Source map może zawierać informacje o tym, skąd pochodzi dana wygenerowana linijka w pliku `.scss`, co można zweryfikować w narzędziach deweloperskich przeglądarki.
+
+Subtask:
+```json
+"build-dev:sass": "sass --style=expanded --source-map sass:css"
+```
+
+Wywoałanie tego subtaska utworzy pliki `.css` w wersji deweloperskiej z mapami źródeł.
+
+### Task 4: bieżąca praca nad projektem
+
+#### Odświeżanie przeglądarki
+
+Utworzenie subtaska z wykorzystaniem pakietu **BrowserSync**:
+```json
+"watch:browsersync": "browser-sync start --server --files \"css/*.css\" \"*.html\""
+```
+
+#### Kompilacja Sassa i Autoprefixer
+
+Instalacja pakietu **[OnChange](https://www.npmjs.com/package/onchange)** do śledzenia zmian. Autoprefixer domyślnie nie posiada takiej funkcji.
+```markup
+npm install onchange --save-dev
+```
+
+Utworzenie subtaska do uruchamiania pakietu OnChange. Po będą uruchamiane kompilator Sass, następnie Autoprefixer.
+```json
+"watch:sassprefixer": "onchange sass/*.scss -- npm run build-dev"
+```
+
+#### Budujemy task  `watch`
+
+Wywołanie taska `watch` rozpoczyna wywołania `build` zawierającego `test`. Takie postępowanie to dobra praktyka, dzięki której błędy zostaną pokazane przed rozpoczęciem pracy nad projektem, a nie po.
+```json
+"watch": "npm-run-all build build-dev -p watch:*"
+```
+
+### Podsumowanie
+
+Pełny kod `package.json` utworzonego na potrzeby pracy z HTML, CSS i JS na tym etapie:
+```json
+{
+  "name": "taskrunner",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.html",
+  "scripts": {
+    "init-project": "npm install && npm-run-all init:*",
+
+    "init:dirs": "mkdirp sass css vendor images js",
+    "init:files": "touch README.md index.html sass/style.scss js/script.js",
+    "init:gitignore": "curl https://raw.githubusercontent.com/github/gitignore/master/Node.gitignore -o .gitignore",
+
+    "test": "npm run test:html",
+    "test:html": "html-validate *.html",
+
+    "build": "npm-run-all build:* test",
+    "build:sass": "sass --style=compressed --no-source-map sass:css",
+    "build:autoprefixer": "postcss css/*.css --use autoprefixer -d css",
+
+    "build-dev": "npm-run-all build-dev:sass build:autoprefixer",
+    "build-dev:sass": "sass --style=expanded --source-map sass:css",
+
+    "watch": "npm-run-all build build-dev -p watch:*",
+    "watch:browsersync": "browser-sync start --server --files \"css/*.css\" \"*.html\"",
+    "watch:sassprefixer": "onchange sass/*.scss -- npm run build-dev"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {},
+  "devDependencies": {
+    "browser-sync": "^2.26.3",
+    "mkdirp": "^0.5.1",
+    "sass": "^1.44.0",
+    "npm-run-all": "^4.1.5",
+    "html-validate": "^2.8.0",
+    "onchange": "^5.2.0",
+    "autoprefixer": "^10.2.4",
+    "postcss-cli": "^8.3.1",
+    "postcss": "^8.2.6"
+  }
+}
+```
+
+### Zadanie:  projekt z task runnerem
+
+**[Link do wykonanego projektu na GitHub](https://github.com/jerzy-jarczynski/task-runner-project.git)**
+
+## 4.7.  Podsumowanie
+
+### Pogłębianie znajomości Gita
+
+-   [Learn Version Control with Git](https://www.git-tower.com/learn/git/ebook/en/command-line/introduction)  – przystępnie napisany ebook dla początkujących
+-   [Git Guide](https://backlog.com/git-tutorial/)  – mnóstwo przydatnych wskazówek, które pomogą Ci w pracy samodzielnej i grupowej
+-   [Git for beginners: 12 commands you need to know](https://blog.prototypr.io/git-for-beginners-12-commands-you-need-to-know-e084cce9cc94)  – przystępne omówienie najbardziej podstawowych komend Gita
+-   [Learn Git branching](https://learngitbranching.js.org/)  – interaktywne narzędzie pozwalające lepiej zrozumieć, jak działają branche
+-   [Git Cheatsheet](https://education.github.com/git-cheat-sheet-education.pdf)  – przygotowana przez GitHuba ściągawka, zawierająca podstawowe komendy Gita
