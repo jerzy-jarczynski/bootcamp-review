@@ -4,8 +4,8 @@
 1. [**Podstawy HTML, CSS i Sass**](https://github.com/jerzy-jarczynski/bootcamp-review/blob/main/module-1.md) --- *done*
 2. [**Praktyka CSS i RWD**](https://github.com/jerzy-jarczynski/bootcamp-review/blob/main/module-2.md) --- *done*
 3. [**Bootstrap**](https://github.com/jerzy-jarczynski/bootcamp-review/blob/main/module-3.md) --- *done*
-4. [**Narzędzia developerskie**](https://github.com/jerzy-jarczynski/bootcamp-review/blob/main/module-4.md) --- *in progress*
-5. **Wprowadzenie do JavaScript** --- *to do*
+4. [**Narzędzia developerskie**](https://github.com/jerzy-jarczynski/bootcamp-review/blob/main/module-4.md) --- *done*
+5. **Wprowadzenie do JavaScript** --- *in progress*
 6. **Praktyka JavaScript** --- *to do*
 7. **Struktury danych - tablice i obiekty** --- *to do*
 8. **Programowanie obiektowe w JS** --- *to do*
