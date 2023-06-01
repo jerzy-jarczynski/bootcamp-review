@@ -316,3 +316,156 @@ to jest ostatnia linia komentarza */
 ```
 
 ### Zmiana klas elementu na stronie
+
+Usuwanie klasy elementu HTML:
+```js
+activeLink.classList.remove('active');
+```
+
+Inne przydatne metody w `classlist`:
+-   `add`  – dodawanie klasy,
+-   `toggle`  – "przełączanie" klasy
+-   `contains`  – sprawdzenie, czy element posiada daną klasę.
+
+### "Magiczne" słowo  `this`
+
+Słowo kluczowe `this` zmienia znaczenie w zależności od tego, gdzie zostało użyte.
+
+Dobrą praktyką jest przypisanie `this` do stałej.
+```js
+const clickedElement = this;
+```
+
+### Blokowanie domyślnej akcji
+
+Jeśli wartość atrybutu `href` będzie się zaczynać od `#`, to zmieni się tylko końcówka adresu. Ten fragment URL-a strony, od znaku `#` do końca, nazywa się określeniem _hash_.
+
+Wyłączenie domyślnego zachowania przeglądarki np. po kliknięciu w link:
+```js
+event.preventDefault();
+```
+
+Zwyczajem jest dodawanie tej linii na początku funkcji.
+
+W ten sposób można blokować domyślne zachowanie dowolnego eventu.
+
+### Zadanie:  Dokończenie handlera eventu
+
+#### Pobranie atrybutu klikniętego linka
+
+#### Wyszukanie właściwego artykułu
+
+#### Dodanie klasy  `active`  na znalezionym artykule
+
+#### Oczekiwany efekt zadania
+
+#### Wskazówka
+
+#### Po skończonej pracy
+
+## 6.4.  Generowanie listy tytułów
+
+### Algorytm działania skryptu
+
+### Spróbuj samodzielnie!
+
+### Dodawanie kodu w pliku  `script.js`
+
+Dobrą praktyką jest zapisywanie ustawień skryptu w stałych:
+```js
+const optArticleSelector = '.post',
+  optTitleSelector = '.post-title',
+  optTitleListSelector = '.titles';
+```
+
+### Usunięcie zawartości listy linków
+
+### Pętla dla wszystkich artykułów
+
+### Odczytanie  `id`  artykułu
+
+### Odczytanie tytułu artykułu
+
+Odczytanie zawartości HTML elementu DOM:
+```js
+const articleTitle = article.querySelector(optTitleSelector).innerHTML;
+```
+
+### Tworzymy kod HTML linka
+
+Utworzenie kodu elementu HTML z zastosowaniem stałych JS:
+```js
+const linkHTML = '<li><a href="#' + articleId + '"><span>' + articleTitle + '</span></a></li>';
+```
+
+### Dodanie linka do listy
+
+Dodawanie elementu do listy:
+```js
+titleList.innerHTML = titleList.innerHTML + linkHTML;
+```
+Kiedy przypisujemy nową wartość do `innerHTML` jakiegoś elementu, jego zawartość jest usuwana i zastępowana tą zawartością.
+
+> Na bardzo rozbudowanych stronach każde dodatkowe obciążenie jest niemile widziane.
+
+#### Wstawianie "przyległego" HTML-a
+
+Bardziej optymalnym sposobem dodawania kodu HTML jest zastosowanie funkcji `insertAdjacentHTML`.
+
+Dostępne lokalizacje kodu wstawianego przez funkcję `insertAdjacentHTML`:
+```
+<!-- beforebegin -->
+<p>
+  <!-- afterbegin -->
+  foo
+  <!-- beforeend -->
+</p>
+<!-- afterend -->
+```
+Składnia funckji:
+```js
+insertAdjacentHTML(position, text)
+```
+
+#### Zbudowanie kodu HTML wszystkich linków
+
+Drugi ze sposobów na optymalizację to przygotowanie kodu HTML wcześniej w skrypcie i dodanie go w całości na stronie.
+
+```js
+ let html = '';
+
+ for(let article of articles){
+   /* get the article id */
+   /* ... */
+
+   /* find the title element */
+   /* ... */
+
+   /* get the title from the title element */
+   /* ... */
+
+   /* create HTML of the link */
+   /* ... */
+
+   /* insert link into html variable */
+   html = html + linkHTML;
+ }
+```
+
+Należy zwrócić uwagę na to, że `html` została zadeklarowana przed ciałem pętli, a także jako zmienna, a nie stała.
+
+### Zadanie:  Przywrócenie funkcjonalności klikania linków
+
+#### Diagnozowanie buga
+
+### Rozwiązanie buga
+
+## 6.5.  Podsumowanie
+
+### Dla chętnych
+
+#### Stylowanie strony
+
+#### Animacja przełączania artykułów
+
+#### Rozbudowa task runnera
