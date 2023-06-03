@@ -19,10 +19,10 @@
 16. **Warsztaty Reacta cz. 1** --- *to do*
 17. **Redux** --- *to do*
 18. **React Router** --- *to do*
-19. Warsztaty Reacta cz. 2 --- *unavailable*
-20. Warsztaty Reacta cz. 3 --- *unavailable*
-21. Testy jednostkowe --- *unavailable*
-22. React - podsumowanie --- *unavailable*
+19. Warsztaty Reacta cz. 2 --- *to do*
+20. Warsztaty Reacta cz. 3 --- *to do*
+21. Testy jednostkowe --- *to do*
+22. React - podsumowanie --- *to do*
 23. Projekt zespołowy 1/3 --- *unavailable*
 24. Projekt zespołowy 2/3 --- *unavailable*
 25. Projekt zespołowy 3/3 --- *unavailable*
