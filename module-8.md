@@ -259,3 +259,231 @@ Dla wywołania funkcji JS ustala `this` od nowa. Która ze znanych Ci już zasad
 `addEventListener` jest wywoływana na obiekcie DOM, więc `this` w kontekście wywołania tej metody wskazuje na ten obiekt właśnie – przycisk. Funkcja `callback` (czyli właściwie `foo`) nie jest wywoływana na obiekcie, nie mamy również `strict mode`, więc zgodnie z poznanymi zasadami jej `this` wskaże na obiekt `window`.
 
 ##### Metody  `call`  i  `apply`
+
+Obie powyższe metody pozwalają na wywoływanie funkcji z dowolnymi parametrami i dowolną wartością `this`.
+
+w `call` parametry wypisujemy po kolei jak przy standardowym wywołaniu:
+```js
+func.call(thisArg, param1, param2);
+```
+
+W przypadku `apply` parametry funkcji są przekazywane w formie tablicy:
+```js
+func.apply(thisArg, [argsArray]);
+```
+
+Obie nadadzą się w sytuacji, gdy chcemy wprowadzić do danego kontekstu funkcji własne `this`.
+
+**Funkcja  `callback`  uruchamia przez nasłuchiwacz domyślnie zawsze wskaże jako  `this`  ten element, na którym uruchomiona była sama metoda  `addEventListener`.**
+
+Przykład:
+```js
+function foo() {
+  console.log(this);
+}
+
+foo.call({ bar: 'baz' });
+```
+
+Otrzymane dane w konsoli
+```
+{bar: "baz"}
+```
+
+**Za pomocą metody  `call`  lub  `apply`  możemy wymusić dowolną wartość  `this`  w danym kontekście, nie zważając nawet, jaka byłaby domyślnie**.
+
+##### Hard binding
+
+Metoda `bind` potrafi, na podstawie dowolnej funkcji, stworzyć nową, która po otrzymaniu na starcie założonego z góry `this`, zawsze będzie się go trzymać, nieważne, w którym miejscu w kodzie (call site) ją wywołamy.
+
+```js
+function foo(param) {
+  console.log(this, param);
+}
+
+const lockedFoo = foo.bind({ bar: 'baz' });
+
+const obj = {
+  foo: lockedFoo
+};
+
+lockedFoo('Spam!');
+obj.foo('Spam!'); // this = { bar: 'baz' }
+```
+
+Otrzymane dane w konsoli:
+```
+{bar: "baz"} "Spam!"
+{bar: "baz"} "Spam!"
+```
+
+Za pomocą metody `call` lub `apply` możemy wymusić wartość dowolną `this` przy konkretnym wywołaniu funkcji, nie zważając nawet, jaka byłaby domyślnie.
+Metoda `bind` pozwala nam za to stworzyć nową funkcję na bazie już istniejącej, która na zawsze z domysłu będzie miała z góry założoną wartość `this`, nie zważając na miejsce wykonania.
+
+## 8.2.  OOP, czyli programowanie obiektowe
+
+### Słowo kluczowe  `new`
+
+Korzystając ze słowa kluczowego `new` podczas wywoływania funkcji, JS tworzy nowy pusty obiekt i udostępnia go w tej funkcji pod `this`.
+Taka funkcja będzie również zwracać ten obiekt.
+
+Przykład:
+```js
+function foo() {
+  this.bar = 'baz';
+  console.log(this);
+}
+
+foo();
+```
+
+Funkcja nie jest włączana na obiekcie ani nie uruchamiamy jej przy użyciu `.call`, `.apply`, czy z `.bind`.
+Jeśli skrypt nie jest odpalany w `strict mode`, to funkcja zwróci obiekt `window`.
+
+Funkcja `foo` przypisze `bar` do `window`, a potem pokaże w konsoli właśnie zawartość obiektu globalnego.
+
+Modyfikacja przykładu:
+```js
+function foo() {
+  this.bar = 'baz';
+  console.log(this);
+}
+
+foo();
+const obj = new foo();
+console.log(obj);
+```
+
+Wynik otrzymany w konsoli:
+![image](https://uploads.kodilla.com/bootcamp/wdp/08/08-8.png)
+
+Przy włączeniu funkcji `foo`, `this` domyślnie stał się pustym obiektem.
+
+Mimo tego, że w naszej funkcji nie użyliśmy słowa kluczowego `return`, to ta i tak coś w takiej sytuacji zwróciła. A konkretnie właśnie ten obiekt, który widzieliśmy też pod `this`.
+
+Słowo kluczowe `new` przy wywołaniu funkcji dodaje do niej dwie "niewidoczne" linijki.
+```js
+function() {
+  const this = {};
+  ...
+  return this;
+}
+```
+
+**przy wywołaniu funkcji za pomocą słowa kluczowego  `new`, JS utworzy nowy pusty obiekt i przypisze go do  `this`  tej funkcji oraz zadba o to, aby go zwracała.**
+
+#### Interesujący use-case
+
+Utworzenie funkcji konstruktora do tworzenia obiektów o takiej samej strukturze:
+```js
+function Person(firstName, lastName, age) {
+  this.firstName = firstName;
+  this.lastName = lastName;
+  this.age = age;
+}
+
+const JohnDoe = new Person('John', 'Doe', 22);
+const AmandaDoe = new Person('Amanda', 'Doe', 30);
+const ThomasJefferson = new Person('Thomas', 'Jefferson', 25);
+```
+
+### Podsumowanie  `this`
+
+W kontekście globalnym wartość  `this`  jest równa referencji do obiektu globalnego `window`.
+
+W przypadku funkcji stosuje się odpowiednie zasady:
+
+1.  Jeśli użyto przed funkcją/konstruktorem klasy słowa kluczowego  `new`, to  `this`  w tej funkcji zawsze będzie równe referencji do nowo utworzonego obiektu.
+2.  Jeśli funkcja została utworzona przy pomocy metody  `bind`, to jej wartość  `this`  będzie zawsze równa temu, co zostało ustalone przy jej kreacji. Podobnie jak w przypadku  `call`  oraz  `apply`, kontekst (`this`) jest przypisywany z pierwszego argumentu funkcji.
+3.  Jeśli funkcja jest wywoływana za pomocą metody  `call`  lub  `apply`, to  `this`  w kontekście wywoływanej funkcji zawsze będzie równe wartości podanej jako pierwszy parametr tej metody.
+4.  Jeśli funkcja została wywołana “na obiekcie”, to  `this`  będzie wskazywał właśnie na ten obiekt.
+5.  Domyślnie, jeśli żadna z wcześniejszych zasad nie dotyczy wywołania danej funkcji,  `this`  będzie wskazywać na obiekt globalny (`window`) lub w przypadku użycia  `strict mode`  wartość  `undefined`.
+
+Kolejność jest tu istotna. Zasady należy weryfikować od góry do dołu.
+
+### Podsumowanie
+
+### Czym różni się OOP od programowania funkcyjnego?
+
+**Programowanie funkcyjne** - w tym podejściu kod aplikacji jest podzielony na funkcje. 
+Funkcje pozwalały na wielokrotne wykorzystanie i częściowe uporządkowanie kodu.
+
+Funkcje są również wykorzystywane w OOP, ale najwyższym poziomem organizacji kodu są **klasy** i **instancje** klas.
+
+Klasa jest wzorcem/schematem – definicją tego, jak będą "wyglądały" instancje tej klasy. A instancje są obiektami stworzonymi wedle tego wzorca.
+
+> #### Gdzie są obiekty w OOP?
+> Formalnie rzecz biorąc, instancje są obiektami, więc będziemy tych określeń używać naprzemiennie.
+
+ Dopiero po napisaniu klasy (schematu) możemy tworzyć jej **instancje**.
+
+### Tworzenie klasy
+```js
+  class  Employee{
+	constructor(name, age, yearlySalary){
+		const thisEmployee =  this;
+		thisEmployee.name  = name;
+		thisEmployee.age  = age;
+		thisEmployee.yearlySalary = yearlySalary;
+		thisEmployee.calculateMonthlySalary();
+	}
+	
+	calculateMonthlySalary(){
+		const thisEmployee =  this;
+		thisEmployee.monthlySalary  = thisEmployee.yearlySalary  /  12;
+	}
+
+	showDetails(){
+		const thisEmployee =  this;
+		console.log(thisEmployee.name, thisEmployee.age, thisEmployee.monthlySalary);
+	}
+}
+```
+
+### Tworzenie instancji
+```js
+const john =  new  Employee('John Doe',  20,  12000);
+
+console.log('john:', john);
+// john: Employee {name: "John Doe", age: 20, yearlySalary: 12000, monthlySalary: 1000}
+
+console.log('john.age:', john.age);
+// john.age: 20
+
+john.showDetails();  
+// 'John Doe', 20, 1000
+
+const jane =  new  Employee('Jane Stevens',  35,  18000);
+
+console.log('jane:', jane);  
+// jane: Employee {name: "Jane Stevens", age: 35, yearlySalary: 18000, monthlySalary: 1500}
+
+console.log('jane.age:', jane.age);
+// jane.age: 35
+
+jane.showDetails();  
+// 'Jane Stevens', 35, 1500
+```
+
+### Zmiana właściwości instancji
+```js
+console.log('john.age:', john.age);
+// john.age: 20
+
+console.log('jane.age:', jane.age);
+// jane.age: 35
+
+john.age++;
+
+console.log('john.age:', john.age);
+// john.age: 21 <== CHANGED
+
+console.log('jane.age:', jane.age);
+// jane.age: 35
+```
+
+JS, w odróżnieniu od innych popularnych języków programowania, nie ma prawdziwego mechanizmu tworzenia klas. Tak naprawdę, słowo kluczowe `class` i zapisy, które widzisz w dokumentacji, to tylko "lukier składniowy".
+
+Podobnie jak deklaracja funkcji nie wie, jakie będą argumenty, tak klasa nie wie, jakie dane będą przekazane instancji tej klasy.
+
+## 8.3.  Otwieramy pizzerię!
