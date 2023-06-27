@@ -487,3 +487,152 @@ JS, w odróżnieniu od innych popularnych języków programowania, nie ma prawdz
 Podobnie jak deklaracja funkcji nie wie, jakie będą argumenty, tak klasa nie wie, jakie dane będą przekazane instancji tej klasy.
 
 ## 8.3.  Otwieramy pizzerię!
+
+### Specyfikacja projektu
+
+### Uruchomienie projektu
+
+### Struktura plików
+
+Pliki tworzone przez nas będą umieszczone w katalogu `src` – jest to skrót od słowa _source_, czyli _źródło_. Dlatego też pliki w tym folderze będziemy nazywać **plikami źródłowymi**.
+
+W parze z `src` będziemy mieli katalog `dist`, czyli skrót od _distribution_. Zostanie on utworzony po uruchomieniu task runnera i będzie zawierał automatycznie generowane pliki strony na podstawie źródłowych.
+
+> Pamiętaj, aby nie edytować ani dodawać żadnych plików do `dist`.
+> 
+>Co więcej, katalog `dist` nie będzie dodawany do repozytorium.
+
+##### Plik  `src/index.html`
+
+##### Katalog  `src/sass`
+
+Głównym plikiem jest jak zwykle `style.scss`. Tym razem jednak znajdziesz w nim tylko deklaracje importujące zawartość innych plików. Zwróć uwagę, że nazwy pozostałych plików zaczynają się od podkreślenia `_` – dzięki temu Sass będzie wiedział, aby nie generować z nich plików `.css`.
+
+Im większy projekt, tym bardziej da się odczuć korzyści płynące z podziału stylów na mniejsze pliki.
+
+Dzięki temu łatwiej jest zachować porządek w stylach i myśleć o nich jako o komponentach.
+
+### Pliki JS
+
+##### Plik  `src/js/functions.js`
+
+W tym pliku umieściliśmy kilka funkcji, które będą nam potrzebne w trakcie realizacji projektu. Wszystkie znajdują się w obiekcie `utils` – to skrót od słowa _utilities_, czyli _narzędzia_.
+
+##### Plik  `src/js/data.js`
+
+W tym pliku znajdziesz obiekt `dataSource`, również z komentarzem dla ESLinta. W tym obiekcie znajduje się cała konfiguracja produktów, które będzie oferować nasza pizzeria.
+
+##### Plik  `src/js/script.js`
+
+To plik, w którym będziemy robić najwięcej zmian.
+
+-   `select`  – obiekt zawierający selektory, które będą nam potrzebne w tym module,
+-   `classNames`  – nazwy klas, którymi nasz skrypt będzie manipulował (nadawał i usuwał),
+-   `settings`  – ustawienia naszego skryptu, wszystkie wartości, które wygodniej będzie zmieniać w jednym miejscu,
+-   `templates`  – szablony Handlebars, do których wykorzystujemy selektory z obiektu  `select`,
+-   `app`  – obiekt, który pomoże nam w organizacji kodu naszej aplikacji,
+-   `app.init();`  – wywołanie metody, która będzie uruchamiać wszystkie pozostałe komponenty strony.
+
+Z założenia, jedynym wywołaniem (uruchomieniem) funkcji poza `app` ma być `app.init()`. To ta metoda uruchomi kolejne, które uruchomią kolejne, etc.
+
+### Task runner i lintery
+
+## 8.4.  Tworzymy pierwszą klasę
+
+### Tworzenie klasy
+
+**Konstruktor** to specjalna metoda, która uruchomi się przy tworzeniu każdej instancji.
+
+### Tworzenie pierwszej instancji
+
+### Instancja dla każdego produktu
+
+```js
+for (let productData in thisApp.data.products) {
+	new Product(productData, thisApp.data.products[productData]);
+}
+```
+
+Pętla `for...in` przechodzi po właściwościach obiektu i **pod zmienną przechowuje zawsze tylko i wyłącznie nazwę aktualnie "obsługiwanej" właściwości**.
+
+### Zapisywanie argumentów konstruktora
+
+Argumenty konstruktora deklarujemy w ten sam sposób, w jaki deklarowaliśmy argumenty funkcji – co ma sens, bo konstruktor jest po prostu funkcją.
+
+Musimy zapisać wartości naszych argumentów do właściwości instancji.
+Wystarczy skorzystać z `this` (lub `thisProduct`, które też prowadzi do tego samego obiektu).
+
+```js
+thisProduct.id = id;
+thisProduct.data = data;
+```
+
+Zwróć uwagę, że zmianę wprowadziliśmy tylko w klasie, czyli we wzorcu, wedle którego jest tworzona każda instancja.
+
+### Renderowanie produktu
+
+Algorytm metody  `renderInMenu`. Ta metoda ma za zadanie:
+
+-   wygenerować kod HTML pojedynczego produktu,
+-   stworzyć element DOM na podstawie tego kodu produktu,
+-   znaleźć na stronie kontener menu,
+-   wstawić stworzony element DOM do znalezionego kontenera menu.
+
+#### Krok 1 – generowanie HTML
+
+#### Krok 2 – tworzenie elementu DOM
+
+HTML to zwykły string, a element DOM to obiekt wygenerowany przez przeglądarkę na podstawie kodu HTML.
+
+JS nie ma wbudowanej metody, która służy do tego celu – dlatego skorzystamy z jednej z funkcji zawartych w obiekcie `utils`.
+
+Stworzony element DOM zapisujemy od razu jako właściwość naszej instancji. To dobra praktyka.
+
+#### Krok 3 - znajdujemy kontener menu
+
+#### Krok 4 – dodajemy stworzony element na stronę
+
+Za pomocą metody `appendChild` dodajemy stworzony element do menu.
+
+```js
+menuContainer.appendChild(thisProduct.element);
+```
+
+##### Produkty już się renderują!
+
+### Analiza danych źródłowych i szablonu
+
+##### Podstawowe właściwości
+
+##### Wstawianie obrazków
+
+Jeśli dziwi Cię użycie `{{{ this }}}`, już tłumaczymy. Słowo `this` odnosi się tutaj do pojedynczego elementu, po którym iteruje pętla `{{#each images}}`. W to miejsce zostanie wstawiony pojedynczy element tablicy `images`.
+
+Handlebars traktuje właściwości wstawiane za pomocą podwójnych nawiasów klamrowych jako tekst. Możesz zmienić te nawiasy na podwójne – zobaczysz wtedy, że zamiast obrazków wyświetlił się kod HTML. Gdybyśmy chcieli wyświetlać np. fragment kodu w kursie programowania, ten tryb tekstu byłby całkiem przydatny.
+
+W naszym przypadku jednak chcemy, aby kod HTML był traktowany jak kod HTML, a nie jak tekst do wyświetlenia. Użycie potrójnych nawiasów klamrowych umożliwia nam właśnie tę zmianę zachowania szablonu.
+
+##### Opcje produktu
+
+W szablonie tworzymy pętlę, która będzie iterować po wszystkich elementach obiektu `params`.
+
+```js
+{{ #each params as |param paramId| }}
+```
+
+Ta pętla wygląda nieco inaczej niż poznane wcześniej pętle, ponieważ zdecydowaliśmy się na nazwanie kluczy i wartości w każdej iteracji. Będą to: klucz `paramId` oraz wartość `param`.
+
+Ten zapis może wydawać się dziwny, ale sama zasada działania jest prosta – to po prostu pętla. Gdybyśmy pisali ją w JS-ie, wyglądałaby tak:
+
+```js
+for(let paramId in params){
+  const param = params[paramId];
+  // ...
+}
+```
+
+Handlebars umożliwia jednak dodawanie własnych bloków. W pliku `src/js/functions.js` zawarliśmy definicję bloku `ifEquals`.
+
+### Podsumowanie
+
+## 8.5.  Uruchamiamy akordeon
