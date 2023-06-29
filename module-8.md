@@ -636,3 +636,40 @@ Handlebars umożliwia jednak dodawanie własnych bloków. W pliku `src/js/functi
 ### Podsumowanie
 
 ## 8.5.  Uruchamiamy akordeon
+
+### Do czego dążymy
+
+### Zmiana w szablonie
+
+To, że inicjujemy instancję danej klasy, nie oznacza, że z automatu uruchomią się metody w niej obecne. Tak naprawdę uruchamiana jest tylko jedna funkcja – `constructor`. Jeśli więc chcemy, żeby jakaś metoda uruchamiała się przy utworzeniu instancji, to po prostu musimy ją wywoływać w konstruktorze.
+
+### Planowanie algorytmu metody
+
+### Składnia handlera w listenerze eventu
+
+Przykład używanej składni dla event listenera:
+```js
+const buttonTest = document.getElementById('button-test');
+
+buttonTest.addEventListener('click', function(){
+  console.log('clicked');
+});
+```
+
+Podajemy anonimową (nienazwaną) funkcję jako drugi argument metody `addEventListener`.
+
+### Zadanie:  dokończenie akordeonu
+
+## 8.6.  Obliczamy cenę produktu
+
+### Obsługa opcji produktu
+
+### Wyszukanie elementów DOM
+
+### Dodajemy akcję do formularza
+
+##### Przygotowanie metod
+
+##### Event listenery dla formularza
+
+### Obliczanie ceny produktu
