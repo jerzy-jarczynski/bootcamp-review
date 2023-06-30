@@ -8,8 +8,8 @@
 5. **[Wprowadzenie do JavaScript](https://github.com/jerzy-jarczynski/bootcamp-review/blob/main/module-5.md)** --- *done*
 6. **[Praktyka JavaScript](https://github.com/jerzy-jarczynski/bootcamp-review/blob/main/module-6.md)** --- *done*
 7. **[Struktury danych - tablice i obiekty](https://github.com/jerzy-jarczynski/bootcamp-review/blob/main/module-7.md)** --- *done*
-8. **[Programowanie obiektowe w JS](https://github.com/jerzy-jarczynski/bootcamp-review/blob/main/module-8.md)** --- *in progress*
-9. **AJAX i API** --- *to do*
+8. **[Programowanie obiektowe w JS](https://github.com/jerzy-jarczynski/bootcamp-review/blob/main/module-8.md)** --- *done*
+9. **[AJAX i API](https://github.com/jerzy-jarczynski/bootcamp-review/blob/main/module-9.md)** --- *in progress*
 10. **Warsztaty JS cz. 1** --- *to do*
 11. **Warsztaty JS cz. 2** --- *to do*
 12. **Projekt indywidualny 1/3** --- *to do*
