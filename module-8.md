@@ -673,3 +673,46 @@ Podajemy anonimową (nienazwaną) funkcję jako drugi argument metody `addEventL
 ##### Event listenery dla formularza
 
 ### Obliczanie ceny produktu
+
+##### Jak to w ogóle ma działać?
+
+##### Odczytywanie wartości z formularza
+
+Chcesz wiedzieć, czy wybrano  `olives`? Wystarczy sprawdzić, czy ten obiekt zawiera w  `toppings`  element  `olives`.
+
+```js
+if(obj.toppings.includes('olives')) { console.log('Wybrano!'); }
+```
+
+Metoda `includes` użyta na tablicy sprawdza właśnie, czy dany element jest w niej dostępny.
+
+##### Algorytm obliczania ceny
+
+### Zadanie:  wdrożenie obliczania ceny
+
+## 8.7.  Dodajemy obsługę obrazków
+
+### Analiza danych źródłowych
+
+### Uzupełnienie metody  `getElements`
+
+### Modyfikujemy metodę  `processOrder`
+
+##### Oczekiwany efekt
+
+##### Podsumowanie
+
+### Zadanie:  implementacja algorytmu
+
+Metoda `querySelector`, jeśli nie udało się odnaleźć elementu, zawsze zwraca `null`. A `null` użyte w `if` da nam `false`... Z drugiej strony, jeśli element uda się znaleźć, to ten użyty w warunku zwróci na `true`.
+
+```js
+const optionImage = thisProduct.imageWrapper.querySelector(???);
+if(optionImage) {
+  // Yes! We've found it!
+}
+```
+
+## 8.8.  Podsumowanie
+
+## 8.9.  Quiz powtórkowy
