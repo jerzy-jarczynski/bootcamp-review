@@ -1,3 +1,4 @@
+
 # 9. AJAX i API
 
 ### Wyzwania:
@@ -52,3 +53,51 @@ Zacznijmy od stworzenia metody `announce`. Będzie ona tworzyła instancje klasy
 #### Oczekiwany efekt
 
 ## 9.2.  Nowe funkcjonalności projektu
+
+### Przygotowanie do rozwoju projektu
+
+#### Style
+
+#### Kod HTML
+
+#### Funkcje JS
+
+#### Kod JS
+
+> #### Łączenie zmian w plikach
+>
+> Jeśli zmiany, które należy wprowadzić, nie są jasno oznaczone, najlepiej skorzystać z narzędzia _diff_ (skrót od _difference_, czyli _różnica_).
+> Jeśli potrzebujesz osobnego narzędzia _diff_, możesz sprawdzić np. [Meld](http://meldmerge.org/) czy [P4Merge](https://www.perforce.com/downloads/visual-merge-tool) – pozwalają one nawet na porównywanie całych katalogów.
+
+### Możemy zaczynać pracę
+
+## 9.3.  Cart – klasa koszyka
+
+### Tworzenie klasy
+
+Wprowadzamy tutaj dodatkowo jedną nowość – **obiekt  `thisCart.dom`**. Nie jest to nic wymaganego, ale znacznie ułatwi nam nawigację po klasie.
+Dzięki temu, że schowamy referencje elementów DOM do osobnego obiektu (`thisCart.dom`), to łatwiej będziemy w stanie określić rolę poszczególnych właściwości. Widzisz w kodzie `thisCart.dom.totalPrice` i od razu wiesz, że to **musi** być element DOM. Widzisz `thisCart.totalPrice` i masz pewność, że to coś innego.
+
+### Tworzenie instancji
+
+### Zadanie:  pokazywanie i chowanie koszyka
+
+#### Oczekiwany efekt
+
+## 9.4.  Dodawanie produktów do koszyka
+
+### Założenia funkcjonalności
+
+### Wysłanie produktu do koszyka
+
+### Analiza dostępnych danych
+
+### Zapisanie danych zamawianego produktu
+
+#### Podstawowe informacje
+
+#### Cena jednostkowa i cena całkowita
+
+#### Opcje produktu
+
+#### Pierwsze kroki
