@@ -143,3 +143,45 @@ Dzięki temu możemy teraz w metodzie  `Cart.initActions`  dodać taki kod:
 Jeśli wszystko poszło dobrze, liczby poszczególnych produktów i wszystkich cen w koszyku już się aktualizują, nie tylko przy dodawaniu nowych produktów, ale także przy zmianie ich liczby.
 
 ## 9.6.  Usuwanie produktu z koszyka
+
+### Wywołanie eventu
+
+![image](https://uploads.kodilla.com/bootcamp/fer/08.ajax-api/fer-08-13.png)
+
+Podobnie jak w `AmountWidget`, wykorzystujemy tutaj `CustomEvent` z właściwością `bubbles`. Dodatkowo jednak wykorzystujemy właściwość `detail`. Możemy w niej przekazać dowolne informacje do handlera eventu. To ważna informacja. Kiedy bowiem emitowaliśmy event informujący o zmianie liczby sztuk, to np. `Cart` nie interesowało, co dokładnie się zmieniło. Sam fakt, że event się wyemitował, był wystarczający. Teraz jednak `Cart` będzie musiało wiedzieć, co dokładnie trzeba usunąć. W tym przypadku przekazujemy więc wraz z eventem dodatkowo odwołanie do tej instancji, dla której kliknięto guzik usuwania.
+
+`detail`  możesz więc rozumieć jako "szczegóły", które mają być przekazywane wraz z eventem.
+
+### Zadanie:  wychwycenie eventu
+
+## 9.7.  AJAX i API – wprowadzenie
+
+### Frontend vs Backend
+
+Tak naprawdę serwer to, najprościej mówiąc, jakiś komputer udostępniający użytkownikowi lub użytkownikom (klientom) swoje zasoby. Zasobami mogą być po prostu pliki, bazy danych, albo np. strony internetowe.
+
+Serwer może mieć bardzo różne zastosowania. Istnieją serwery FTP (serwery plików), poczty, telnet (zdalna obsługa komputera), czy WWW.
+
+#### Cienka granica
+
+Faktycznie JS jest teraz o wiele bardziej funkcjonalny, co wpływa na zmianę balansu – coraz częściej frontend zajmuję się większością logiki aplikacji, a backend pełni drugorzędną funkcję. Bardzo często sprowadza się ona jedynie do roli pośrednika do bazy danych. W takiej sytuacji mówimy o serwerach API.
+
+Nie możemy komunikować się z bazą danych wprost z poziomu klienta (naszej strony internetowej). Serwer jednak ma już taką możliwość.
+
+Chcemy pobrać dane? Wysyłamy prośbę (request) do serwera, ten łączy się z bazą, pobiera takie dane i zwraca je nam w odpowiedzi (response). Chcemy zmienić coś w bazie? Może np. dodać jakieś dane? Musimy połączyć się z serwerem (request) i powiedzieć mu o co chodzi. Serwer połączy się z bazą, doda dane, a następnie zwróci nam informacje o sukcesie czy porażce (response).
+
+![image](https://uploads.kodilla.com/bootcamp/wdp/09/09-19.png)
+
+### Co to jest AJAX?
+
+Jednak właściwie jak klient (strona internetowa) może wykonać taki request? Odpowiedź brzmi **AJAX**.
+
+AJAX (_Asynchronous JavaScript and XML_) jest **asynchronicznym zapytaniem do serwera**. Słowo _asynchroniczny_ oznacza, że nasz kod JS może dalej pracować podczas oczekiwania na odpowiedź serwera.
+
+AJAX umożliwia wysyłanie zapytań do serwera, a jednocześnie dalsze, nieprzerwane działanie aplikacji. Dzięki temu możemy np. dynamicznie podmieniać treści na stronie, bez konieczności przeładowywania jej w całości.
+
+Serwery nie zawsze będą w stanie odpowiedzieć nam szybko. Weź pod uwagę, że często obsługują miliony zapytań od różnych klientów, a to może wpływać negatywnie na ich wydajność.
+
+Warto podkreślić, że AJAX nie jest osobną technologią lub frameworkiem. Jest to pewna filozofia myślenia o aplikacjach internetowych, koncentrująca się na dynamicznej interakcji z użytkownikiem. Żądania (requesty) AJAX-owe mogą być pisane m.in. w znanym Ci już języku JavaScript.
+
+### Po co kontaktować się z serwerem?
