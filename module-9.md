@@ -185,3 +185,121 @@ Serwery nie zawsze będą w stanie odpowiedzieć nam szybko. Weź pod uwagę, ż
 Warto podkreślić, że AJAX nie jest osobną technologią lub frameworkiem. Jest to pewna filozofia myślenia o aplikacjach internetowych, koncentrująca się na dynamicznej interakcji z użytkownikiem. Żądania (requesty) AJAX-owe mogą być pisane m.in. w znanym Ci już języku JavaScript.
 
 ### Po co kontaktować się z serwerem?
+
+### Co możemy wysyłać i odbierać?
+
+W większości wypadków jednak, chodzi o pobranie z serwera jakichś danych. Dlatego też komunikacja odbywa się w jednym z dwóch formatów: XML lub JSON.
+
+### JSON
+
+Ten format bardzo przypomina zwykłe obiekty i tablice w kodzie JS. Jedyną poważną różnicą jest to, że nazwy właściwości muszą być opakowane cudzysłowem, a same dane powinny być proste. Mówiąc proste, mamy na myśli, że mogą być to liczby, teksty, obiekty, tablice, ale np. funkcje już nie.
+
+JSON to tak naprawdę nic innego, jak po prostu ciąg znaków (string, tekst), który jest sformatowany bardzo podobnie do tablic i obiektów w JS. Przykładowy obiekt w JSON wygląda tak:
+
+```json
+{
+  "books" : [
+    {
+      "author": "Moore, Kate",
+      "title": "The Radium Girls",
+      "genre": "History"
+    },
+    {
+      "author": "Madeline, Miller",
+      "title": "Circe",
+      "genre": "Fantasy"
+    },
+    {
+      "author": "King, Stephen",
+      "title": "Elevation",
+      "genre": "Horror"
+    }
+  ]
+}
+```
+
+Do konwertowania JSON-a na tablice/obiekty i odwrotnie używamy biblioteki `JSON`.
+
+### Czym jest API?
+
+Często mówiąc o serwerze, który pełni rolę pośrednika do bazy danych, mówimy serwer API.
+
+API wcale nie tyczy się tylko serwera. Mówiąc API mamy na myśli po prostu zbiór metod danego programu/aplikacji, które można wywoływać spoza niego.
+
+Mówiąc API mamy na myśli po prostu jakiegoś pośrednika, który za pomocą prostych komend/metod jest w stanie uruchamiać znacznie większe i bardziej interesujące operacje.
+
+Warto powiedzieć, że bardzo często nie interesuje nas to, jak serwer jest zbudowany pod maską. Obchodzi nas tylko to jakie endpointy (adresy) udostępnia i co pod nimi wykonuje.
+
+### Metody zapytań
+
+Przy komunikacji AJAX-owej mamy do wyboru tzw. metody zapytań.
+
+Podstawową metodą jest `GET`. Kiedy wpiszesz adres strony w przeglądarce i wciśniesz _enter_, do serwera zostanie wysłane właśnie zapytanie `GET`.
+
+Drugą, bardzo popularną metodą zapytania jest `POST`, służąca do wysyłania danych do serwera.
+
+Zapytanie `GET` do endpointa `/orders` powinno zwrócić listę wszystkich zamówień. Jeśli zaś zmienimy metodę na `POST`, serwer będzie oczekiwał, że prześlemy mu dane nowego zamówienia.
+
+### Podsumowanie
+
+## 9.8.  Pobieranie listy produktów
+
+Wspomożemy się specjalną paczką – `json-server`. Jej działanie jest stosunkowo proste. Musimy poinformować ją z jakiego pliku `.json` z danymi ma skorzystać, a ona sama przygotuje nam serwer z odpowiednimi endpointami, które pozwolą nam na skuteczną komunikację z tymi danymi.
+
+```js
+{
+  names: ['John', 'Amanda', 'Thomas']
+}
+```
+
+Paczka ta stworzy nam serwer z m.in. następującymi endpointami:
+-   **GET**  `/names`  – zwracałoby tablicę  `['John', 'Amanda', 'Thomas']`
+-   **POST**  `/names`  – pozwalałoby na dodawanie do tablicy nowego elementu
+
+### Co przed nami
+
+1.  Pobranie paczki  `json-server`.
+2.  Przygotowanie nowego tasku  `server`  w task-runnerze, który przy użyciu  `json-server`  i podanych danych będzie dbał o uruchomienie serwera z odpowiednimi endpointami.
+3.  Pozbycie się w naszym kliencie (stronie internetowej) bezpośredniego dostępu do danych  `(dataSource)`.
+4.  Zadbanie o to, aby klient, zaraz po uruchomieniu strony, łączył się z serwerem i za jego pomocą pobierał dane o produktach.
+
+Przechowywanie danych poza aplikacją ma wiele zalet. Przede wszystkim możemy skonfigurować serwer w taki sposób, aby np. nie zawsze zwracał wszystkie dane.
+
+Dedykowany serwer to więc znacznie **większe bezpieczeństwo**, jak i możliwość **personalizacji** zwracanych danych.
+
+Druga sprawa to na pewno **centralizacja danych**.
+
+Nasz serwer API będzie serwerem z danymi, który udostępnia możliwość ich modyfikacji przy użyciu endpointów. Dzięki temu każdy klient na starcie aplikacji będzie w stanie pobrać aktualne dane startowe, ale też później wedle woli je odświeżać, czy nawet informować o dodaniu czegoś nowego, np. nowego zamówienia.
+
+Podsumowując, **mamy wielu klientów, ale jedną centralę, która przechowuje wspólne dane, wszystko kontroluje i pozwala dojść do nich przy użyciu endpointów.**
+
+Trzecia zaleta – **uniwersalność**. Możemy wyobrazić sobie, że nasz serwer jest wykorzystywany nie tylko przez stronę z produktami, ale też zupełnie inną aplikację – panel administracyjny.
+
+> #### Żyjemy w symulacji ;)
+>
+> Będziemy uruchamiać na razie nasz serwer lokalnie. 
+> Będziemy mogli otworzyć pięć razy stronę pizzerii i każda zakładka będzie nowym klientem korzystającym z jednego i tego samego serwera. Nie będzie jednak możliwości połączenia z zewnątrz, z całkiem innych komputerów.
+
+### Instalacja  `json-server`
+
+```plaintext
+npm install --save json-server
+```
+
+### Plik z danymi
+
+Musimy więc skonwertować nasze dane z pliku `data.js` do formatu JSON, dopiero wtedy będziemy mogli wkleić je do `app.json`. Można to zrobić chociażby przy użyciu jednego z dostępnych w internecie [konwerterów](https://www.convertonline.io/convert/js-to-json).
+
+### Task runner
+
+```plaintext
+"server": "json-server --port 3131 --no-cors --delay 250 --watch dist/db/app.json",
+"watch": "npm-run-all build build-dev -p watch:* server",
+"watch:browsersync": "browser-sync start --server dist --files \"dist/**/*\" --ignore \"dist/db/**/*\"",
+```
+
+Połączenie z lokalnym serwerem jest znacznie szybsze, niż z serwerem funkcjonującym w internecie (zdalnym), więc dodaliśmy opóźnienie `250ms` (1/4 sekundy), tak aby efekt był bardziej realistyczny.
+
+Zauważ, że tym samym będziemy posiadać już dwa serwery. Jeden (`localhost:3000`) serwuje naszą stronę, drugi (`localhost:3131`) udostępnia endpointy do komunikacji z bazą danych.
+
+### Test API
