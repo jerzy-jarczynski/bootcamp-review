@@ -23,12 +23,12 @@
 20. Warsztaty Reacta cz. 3 --- *to do*
 21. Testy jednostkowe --- *to do*
 22. React - podsumowanie --- *to do*
-23. Projekt zespołowy 1/3 --- *unavailable*
-24. Projekt zespołowy 2/3 --- *unavailable*
-25. Projekt zespołowy 3/3 --- *unavailable*
-26. Node.js - JavaScript poza przeglądarką --- *unavailable*
-27. Express - własny serwer HTTP --- *unavailable*
-28. Websocket - natychmiastowa komunikacja --- *unavailable*
+23. Projekt zespołowy 1/3 --- *to do*
+24. Projekt zespołowy 2/3 --- *to do*
+25. Projekt zespołowy 3/3 --- *to do*
+26. Node.js - JavaScript poza przeglądarką --- *to do*
+27. Express - własny serwer HTTP --- *to do*
+28. Websocket - natychmiastowa komunikacja --- *to do*
 29. MongoDB - baza danych dla backendu --- *unavailable*
 30. Testy jednostkowe w backendzie --- *unavailable*
 31. Zabezpieczona aplikacja --- *unavailable*
