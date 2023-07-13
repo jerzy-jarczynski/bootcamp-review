@@ -303,3 +303,70 @@ Połączenie z lokalnym serwerem jest znacznie szybsze, niż z serwerem funkcjon
 Zauważ, że tym samym będziemy posiadać już dwa serwery. Jeden (`localhost:3000`) serwuje naszą stronę, drugi (`localhost:3131`) udostępnia endpointy do komunikacji z bazą danych.
 
 ### Test API
+
+Możesz zastanawiać się jakiej metody użyła przeglądarka, wchodząc na ten endpoint (adres). Dlaczego uznała, że użyliśmy metody **GET**? Z prostego powodu. Gdy wchodzimy na jakiś adres w przeglądarce, to zawsze domyślnie wykorzystywana jest właśnie ta metoda.
+
+Plik z danymi stworzyliśmy w katalogu `src/db`, ale serwer korzysta z pliku `dist/db/app.json`. Jeśli zechcesz ręcznie zmienić zawartość pliku z danymi, zmieniaj wyłącznie plik `src/db/app.json`. Zostanie on automatycznie skopiowany do `dist/db`, a API natychmiast zacznie korzystać z nowej wersji pliku.
+
+### Pobieranie danych z API
+
+Czas w końcu rozkazać JS-owi, aby połączył się z tym endpointem.
+Użyjemy do tego celu wbudowanej funkcji `fetch`.
+Najprościej możemy jednak rozumieć funkcję schowaną w pierwszym `.then` jako funkcję, która uruchomi się **wtedy, gdy request się zakończy, a serwer zwróci odpowiedź**.
+
+![image](https://uploads.kodilla.com/bootcamp/fer/08.ajax-api/fer-08-14.png)
+
+Najpierw za pomocą funkcji `fetch` wysyłamy zapytanie (request) pod podany adres endpointu. Następnie otrzyma odpowiedź, która jak już wiesz, jest w formacie JSON. Widzieliśmy to wcześniej w przeglądarce. Dalej konwertujemy więc tę odpowiedź na obiekt JS-owy. Wreszcie, po otrzymaniu skonwertowanej odpowiedzi `parsedResponse`, wyświetlamy ją w konsoli.
+
+`fetch` domyślnie korzysta z metody `GET`.
+
+Połączyliśmy się z tym samym serwerem, tym samym endpointem, przy użyciu tej samej metody. Tyle że tym razem zrobiliśmy to asynchronicznie, z poziomu już załadowanej strony i to bez potrzeby przeładowywania czegokolwiek.
+
+Składnia  `fetch`  z  `then`  może na razie wydawać się trochę specyficzna, ale możesz zrozumieć całość jako prosty rozkaz:
+
+1.  Połącz się z adresem  `url`  przy użyciu metody  `fetch`.
+2.  Jeśli połączenie się zakończy, to wtedy (pierwsze  `.then`) skonwertuj dane do obiektu JS-owego.
+3.  Kiedy i ta operacja się zakończy, to wtedy (drugie  `.then`) pokaż w konsoli te skonwertowane dane.
+
+### Podsumowanie
+
+Przełącz teraz narzędzia developerskie z _Console_ na _Network_.
+kliknij ikonę filtra
+w polu _Filter_ wpisz `products`.
+kliknij nazwę znalezionego połączenia
+
+W sekcji _General_ znajdują się najważniejsze nagłówki naszego zapytania – takie jak np. adres, z którym się połączyliśmy. Bardzo ważną pozycją jest _Status Code_, w której znajdziesz [kod odpowiedzi HTTP](https://pl.wikipedia.org/wiki/Kod_odpowiedzi_HTTP), informujący o tym, czy połączenie się powiodło (kod 200), czy np. nie znaleziono takiego adresu (kod 404) lub nie możemy zobaczyć tej treści bez zalogowania (kod 403).
+
+> Każde zapytanie do serwera i każda jego odpowiedź zawiera nagłówek (_header_) oraz opcjonalnie treść (_body_). W nagłówku znajdziesz parametry tego zapytania. Większość z nich jest automatycznie nadawana przez przeglądarkę lub serwer, ale niektóre z nich będą również nadawane przez nas – przekonasz się o tym, gdy będziemy wysyłać zamówienie do API.
+
+Kolejnym miejscem, które zawiera wartościowe informacje, jest zakładka _Preview_, w której znajdziesz treść odpowiedzi z serwera.
+
+## 9.9.  Wysyłanie zamówienia do API
+
+### Nowa kolekcja w bazie danych
+
+Wystarczy, że dodasz do pliku `app.json` nową pustą tablicę o nazwie `orders` i tak naprawdę... to tyle. Od teraz JSON-server w momencie uruchomienia będzie tworzył bazę danych złożoną już z dwóch kolekcji (`products` i `orders`) oraz udostępni endpointy do ich obsługi.
+
+### Wychwycenie submitu formularza
+
+```js
+const options = {
+  method: 'POST',
+  headers: {
+    'Content-Type': 'application/json',
+  },
+  body: JSON.stringify(payload),
+};
+
+fetch(url, options);
+```
+
+![image](https://uploads.kodilla.com/bootcamp/fer/08.ajax-api/fer-08-15.png)
+
+### Zadanie:  agregacja danych z koszyka
+
+## 9.10.  Podsumowanie
+
+### Dla chętnych
+
+## 9.11.  Quiz powtórkowy
