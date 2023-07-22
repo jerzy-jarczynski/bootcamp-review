@@ -1,372 +1,346 @@
-# 9. AJAX i API
+# 10. Warsztaty JS cz.1
 
-### Wyzwania:
+## 10.1.  Rozgrzewka
 
-### Wstęp
+### Pierwsze kroki – tablice i obiekty
 
-## 9.1.  Nowa klasa – widget ilości
-
-Cała idea OOP opiera się na tym, aby oddzielać od siebie grupy funkcjonalności.
-
-### Specyfikacja klasy
-
-### Przygotowanie klasy
-
-> #### Zwijanie kodu i komentowanie
->
-> W sytuacji, gdzie kod aplikacji zaczyna się rozrastać przydatne może okazać się zwijanie kodu. Opcja ta powinna być dostępna w większości popularnych edytorów kodu. W ten sposób można zwinąć całą metodę lub klasę, pozostawiając widocznym jedynie nagłówek.
->
-> Pomocne może być również zakomentowanie `console.log()` lub całkowite ich usunięcie, jeżeli korzysta się z debuggera.
-
-### Znalezienie elementów widgetu
-
-Jeśli zapiszemy coś do właściwości instancji, to możemy z tego korzystać w każdej jej metodzie.
-
-### Przygotowujemy funkcję pośrednik
-
-Jeśli `parseInt` natrafi na tekst, którego nie da się skonwertować na liczbę (np. `abc`), to najprościej w świecie zwróci `null`. Wystarczy więc sprawdzić w naszym warunku, czy oprócz tego, że `thisWidget.value !== newValue`, `newValue` nie jest też `null`-em.
+#### Ćwiczenie 1
 
 ```js
-/* TODO: Add validation */
-if(thisWidget.value !== newValue && !isNaN(newValue)) {
-  thisWidget.value = newValue;
-}
+const names = ['Kasia', 'Tomek', 'Amanda', 'Maja'];
 ```
 
-### Dodanie reakcji na eventy
+Należy zwrócić tablicę imion żeńskich (kończących się na 'a').
 
-### Zakres akceptowanych wartości
+Rozwiązanie: regex, filter
+```js
+const filterNamesEndingWithA = (names) => names.filter(name =>  /a$/.test(name);
+```
 
-### Informowanie produktu o zmianie
-
-#### Wywołanie eventu
-
-Zacznijmy od stworzenia metody `announce`. Będzie ona tworzyła instancje klasy `Event`, wbudowanej w silnik JS (czyli w przeglądarkę). Jest to klasa odpowiedzialna właśnie za stworzenie obiektu "eventu". Następnie, ten event zostanie wyemitowany na kontenerze naszego widgetu.
-
-![](https://uploads.kodilla.com/bootcamp/fer/07.oop/fer-07-23.png)
-
-#### Nasłuchiwanie eventu
-
-### Zadanie:  walidacja wartości
-
-#### Oczekiwany efekt
-
-## 9.2.  Nowe funkcjonalności projektu
-
-### Przygotowanie do rozwoju projektu
-
-#### Style
-
-#### Kod HTML
-
-#### Funkcje JS
-
-#### Kod JS
-
-> #### Łączenie zmian w plikach
->
-> Jeśli zmiany, które należy wprowadzić, nie są jasno oznaczone, najlepiej skorzystać z narzędzia _diff_ (skrót od _difference_, czyli _różnica_).
-> Jeśli potrzebujesz osobnego narzędzia _diff_, możesz sprawdzić np. [Meld](http://meldmerge.org/) czy [P4Merge](https://www.perforce.com/downloads/visual-merge-tool) – pozwalają one nawet na porównywanie całych katalogów.
-
-### Możemy zaczynać pracę
-
-## 9.3.  Cart – klasa koszyka
-
-### Tworzenie klasy
-
-Wprowadzamy tutaj dodatkowo jedną nowość – **obiekt  `thisCart.dom`**. Nie jest to nic wymaganego, ale znacznie ułatwi nam nawigację po klasie.
-Dzięki temu, że schowamy referencje elementów DOM do osobnego obiektu (`thisCart.dom`), to łatwiej będziemy w stanie określić rolę poszczególnych właściwości. Widzisz w kodzie `thisCart.dom.totalPrice` i od razu wiesz, że to **musi** być element DOM. Widzisz `thisCart.totalPrice` i masz pewność, że to coś innego.
-
-### Tworzenie instancji
-
-### Zadanie:  pokazywanie i chowanie koszyka
-
-#### Oczekiwany efekt
-
-## 9.4.  Dodawanie produktów do koszyka
-
-### Założenia funkcjonalności
-
-### Wysłanie produktu do koszyka
-
-### Analiza dostępnych danych
-
-### Zapisanie danych zamawianego produktu
-
-#### Podstawowe informacje
-
-#### Cena jednostkowa i cena całkowita
-
-#### Opcje produktu
-
-#### Pierwsze kroki
-
-#### To za mało?
-
-### Zadanie:  generowanie elementów DOM
-
-#### Oczekiwany efekt
-
-## 9.5.  CartProduct – klasa pozycji w koszyku
-
-### Tworzenie klasy
-
-> Jeśli już jednak zdecydujemy się na jakieś nazwy czy praktyki, to najlepiej trzymać się ich w całym projekcie. Dzięki temu znacznie łatwiej będzie Ci nawigować po klasach w przypadku błędów, czy też rozwoju aplikacji.
-
-### Tworzenie instancji
-
-### Obsługa widgetu ilości sztuk
-
-### Sumowanie koszyka
-
-Dlaczego tym razem, zamiast tworzyć nową stałą, przypisujemy ją jako właściwość? Z prostego powodu. Stałe są dostępne tylko w danym zakresie. W tym przypadku w zakresie funkcji `update`. Właściwości są za to dostępne w całej instancji. Tym samym możemy je używać również w innych metodach. `deliveryFee` czy `totalNumber` nie będzie nam potrzebne "na zewnątrz", dlatego są one stałymi. `totalPrice` jednak będziemy już używać w innej metodzie. Tej, która będzie odpowiedzialna za wysyłkę danych do serwera. Musimy więc mieć do niej dostęp na zewnątrz.
-
-### Wyświetlenie aktualnych sum
-
-### Aktualizacja sum po zmianie ilości
-
-Chcielibyśmy, aby zmiana ilości sztuk w instancji `CartProduct` również uruchamiała metodę `update`, ale mamy pewien problem. Zmiana liczby sztuk zachodzi w klasie `CartProduct`, a metoda `update` znajduje się w klasie `Cart`.
-
-Wykorzystamy do tego event, który jest już generowany przez `AmountWidget` w instancjach `CartProduct`. Musimy go jednak nieco zmodyfikować.
+#### Ćwiczenie 2
 
 ```js
-const event = new CustomEvent('updated', {
-	bubbles: true;
-});
-```
-
-W tym wypadku włączamy właściwość `bubbles`, która ma bardzo ciekawe działanie. Bez `bubbles` event jest emitowany tylko na jednym elemencie, na tym, na którym odpalamy `dispatchEvent`. Z opcją `bubbles`, ten event będzie nadal emitowany na tym elemencie, ale również na jego rodzicu, oraz dziadku, i tak dalej – aż do samego `<body>`, `document` i `window`.
-
-Dzięki temu możemy teraz w metodzie  `Cart.initActions`  dodać taki kod:
-![image](https://uploads.kodilla.com/bootcamp/fer/08.ajax-api/fer-08-12.png)
-
-Jeśli wszystko poszło dobrze, liczby poszczególnych produktów i wszystkich cen w koszyku już się aktualizują, nie tylko przy dodawaniu nowych produktów, ale także przy zmianie ich liczby.
-
-## 9.6.  Usuwanie produktu z koszyka
-
-### Wywołanie eventu
-
-![image](https://uploads.kodilla.com/bootcamp/fer/08.ajax-api/fer-08-13.png)
-
-Podobnie jak w `AmountWidget`, wykorzystujemy tutaj `CustomEvent` z właściwością `bubbles`. Dodatkowo jednak wykorzystujemy właściwość `detail`. Możemy w niej przekazać dowolne informacje do handlera eventu. To ważna informacja. Kiedy bowiem emitowaliśmy event informujący o zmianie liczby sztuk, to np. `Cart` nie interesowało, co dokładnie się zmieniło. Sam fakt, że event się wyemitował, był wystarczający. Teraz jednak `Cart` będzie musiało wiedzieć, co dokładnie trzeba usunąć. W tym przypadku przekazujemy więc wraz z eventem dodatkowo odwołanie do tej instancji, dla której kliknięto guzik usuwania.
-
-`detail`  możesz więc rozumieć jako "szczegóły", które mają być przekazywane wraz z eventem.
-
-### Zadanie:  wychwycenie eventu
-
-## 9.7.  AJAX i API – wprowadzenie
-
-### Frontend vs Backend
-
-Tak naprawdę serwer to, najprościej mówiąc, jakiś komputer udostępniający użytkownikowi lub użytkownikom (klientom) swoje zasoby. Zasobami mogą być po prostu pliki, bazy danych, albo np. strony internetowe.
-
-Serwer może mieć bardzo różne zastosowania. Istnieją serwery FTP (serwery plików), poczty, telnet (zdalna obsługa komputera), czy WWW.
-
-#### Cienka granica
-
-Faktycznie JS jest teraz o wiele bardziej funkcjonalny, co wpływa na zmianę balansu – coraz częściej frontend zajmuję się większością logiki aplikacji, a backend pełni drugorzędną funkcję. Bardzo często sprowadza się ona jedynie do roli pośrednika do bazy danych. W takiej sytuacji mówimy o serwerach API.
-
-Nie możemy komunikować się z bazą danych wprost z poziomu klienta (naszej strony internetowej). Serwer jednak ma już taką możliwość.
-
-Chcemy pobrać dane? Wysyłamy prośbę (request) do serwera, ten łączy się z bazą, pobiera takie dane i zwraca je nam w odpowiedzi (response). Chcemy zmienić coś w bazie? Może np. dodać jakieś dane? Musimy połączyć się z serwerem (request) i powiedzieć mu o co chodzi. Serwer połączy się z bazą, doda dane, a następnie zwróci nam informacje o sukcesie czy porażce (response).
-
-![image](https://uploads.kodilla.com/bootcamp/wdp/09/09-19.png)
-
-### Co to jest AJAX?
-
-Jednak właściwie jak klient (strona internetowa) może wykonać taki request? Odpowiedź brzmi **AJAX**.
-
-AJAX (_Asynchronous JavaScript and XML_) jest **asynchronicznym zapytaniem do serwera**. Słowo _asynchroniczny_ oznacza, że nasz kod JS może dalej pracować podczas oczekiwania na odpowiedź serwera.
-
-AJAX umożliwia wysyłanie zapytań do serwera, a jednocześnie dalsze, nieprzerwane działanie aplikacji. Dzięki temu możemy np. dynamicznie podmieniać treści na stronie, bez konieczności przeładowywania jej w całości.
-
-Serwery nie zawsze będą w stanie odpowiedzieć nam szybko. Weź pod uwagę, że często obsługują miliony zapytań od różnych klientów, a to może wpływać negatywnie na ich wydajność.
-
-Warto podkreślić, że AJAX nie jest osobną technologią lub frameworkiem. Jest to pewna filozofia myślenia o aplikacjach internetowych, koncentrująca się na dynamicznej interakcji z użytkownikiem. Żądania (requesty) AJAX-owe mogą być pisane m.in. w znanym Ci już języku JavaScript.
-
-### Po co kontaktować się z serwerem?
-
-### Co możemy wysyłać i odbierać?
-
-W większości wypadków jednak, chodzi o pobranie z serwera jakichś danych. Dlatego też komunikacja odbywa się w jednym z dwóch formatów: XML lub JSON.
-
-### JSON
-
-Ten format bardzo przypomina zwykłe obiekty i tablice w kodzie JS. Jedyną poważną różnicą jest to, że nazwy właściwości muszą być opakowane cudzysłowem, a same dane powinny być proste. Mówiąc proste, mamy na myśli, że mogą być to liczby, teksty, obiekty, tablice, ale np. funkcje już nie.
-
-JSON to tak naprawdę nic innego, jak po prostu ciąg znaków (string, tekst), który jest sformatowany bardzo podobnie do tablic i obiektów w JS. Przykładowy obiekt w JSON wygląda tak:
-
-```json
-{
-  "books" : [
-    {
-      "author": "Moore, Kate",
-      "title": "The Radium Girls",
-      "genre": "History"
-    },
-    {
-      "author": "Madeline, Miller",
-      "title": "Circe",
-      "genre": "Fantasy"
-    },
-    {
-      "author": "King, Stephen",
-      "title": "Elevation",
-      "genre": "Horror"
-    }
-  ]
-}
-```
-
-Do konwertowania JSON-a na tablice/obiekty i odwrotnie używamy biblioteki `JSON`.
-
-### Czym jest API?
-
-Często mówiąc o serwerze, który pełni rolę pośrednika do bazy danych, mówimy serwer API.
-
-API wcale nie tyczy się tylko serwera. Mówiąc API mamy na myśli po prostu zbiór metod danego programu/aplikacji, które można wywoływać spoza niego.
-
-Mówiąc API mamy na myśli po prostu jakiegoś pośrednika, który za pomocą prostych komend/metod jest w stanie uruchamiać znacznie większe i bardziej interesujące operacje.
-
-Warto powiedzieć, że bardzo często nie interesuje nas to, jak serwer jest zbudowany pod maską. Obchodzi nas tylko to jakie endpointy (adresy) udostępnia i co pod nimi wykonuje.
-
-### Metody zapytań
-
-Przy komunikacji AJAX-owej mamy do wyboru tzw. metody zapytań.
-
-Podstawową metodą jest `GET`. Kiedy wpiszesz adres strony w przeglądarce i wciśniesz _enter_, do serwera zostanie wysłane właśnie zapytanie `GET`.
-
-Drugą, bardzo popularną metodą zapytania jest `POST`, służąca do wysyłania danych do serwera.
-
-Zapytanie `GET` do endpointa `/orders` powinno zwrócić listę wszystkich zamówień. Jeśli zaś zmienimy metodę na `POST`, serwer będzie oczekiwał, że prześlemy mu dane nowego zamówienia.
-
-### Podsumowanie
-
-## 9.8.  Pobieranie listy produktów
-
-Wspomożemy się specjalną paczką – `json-server`. Jej działanie jest stosunkowo proste. Musimy poinformować ją z jakiego pliku `.json` z danymi ma skorzystać, a ona sama przygotuje nam serwer z odpowiednimi endpointami, które pozwolą nam na skuteczną komunikację z tymi danymi.
-
-```js
-{
-  names: ['John', 'Amanda', 'Thomas']
-}
-```
-
-Paczka ta stworzy nam serwer z m.in. następującymi endpointami:
--   **GET**  `/names`  – zwracałoby tablicę  `['John', 'Amanda', 'Thomas']`
--   **POST**  `/names`  – pozwalałoby na dodawanie do tablicy nowego elementu
-
-### Co przed nami
-
-1.  Pobranie paczki  `json-server`.
-2.  Przygotowanie nowego tasku  `server`  w task-runnerze, który przy użyciu  `json-server`  i podanych danych będzie dbał o uruchomienie serwera z odpowiednimi endpointami.
-3.  Pozbycie się w naszym kliencie (stronie internetowej) bezpośredniego dostępu do danych  `(dataSource)`.
-4.  Zadbanie o to, aby klient, zaraz po uruchomieniu strony, łączył się z serwerem i za jego pomocą pobierał dane o produktach.
-
-Przechowywanie danych poza aplikacją ma wiele zalet. Przede wszystkim możemy skonfigurować serwer w taki sposób, aby np. nie zawsze zwracał wszystkie dane.
-
-Dedykowany serwer to więc znacznie **większe bezpieczeństwo**, jak i możliwość **personalizacji** zwracanych danych.
-
-Druga sprawa to na pewno **centralizacja danych**.
-
-Nasz serwer API będzie serwerem z danymi, który udostępnia możliwość ich modyfikacji przy użyciu endpointów. Dzięki temu każdy klient na starcie aplikacji będzie w stanie pobrać aktualne dane startowe, ale też później wedle woli je odświeżać, czy nawet informować o dodaniu czegoś nowego, np. nowego zamówienia.
-
-Podsumowując, **mamy wielu klientów, ale jedną centralę, która przechowuje wspólne dane, wszystko kontroluje i pozwala dojść do nich przy użyciu endpointów.**
-
-Trzecia zaleta – **uniwersalność**. Możemy wyobrazić sobie, że nasz serwer jest wykorzystywany nie tylko przez stronę z produktami, ale też zupełnie inną aplikację – panel administracyjny.
-
-> #### Żyjemy w symulacji ;)
->
-> Będziemy uruchamiać na razie nasz serwer lokalnie. 
-> Będziemy mogli otworzyć pięć razy stronę pizzerii i każda zakładka będzie nowym klientem korzystającym z jednego i tego samego serwera. Nie będzie jednak możliwości połączenia z zewnątrz, z całkiem innych komputerów.
-
-### Instalacja  `json-server`
-
-```plaintext
-npm install --save json-server
-```
-
-### Plik z danymi
-
-Musimy więc skonwertować nasze dane z pliku `data.js` do formatu JSON, dopiero wtedy będziemy mogli wkleić je do `app.json`. Można to zrobić chociażby przy użyciu jednego z dostępnych w internecie [konwerterów](https://www.convertonline.io/convert/js-to-json).
-
-### Task runner
-
-```plaintext
-"server": "json-server --port 3131 --no-cors --delay 250 --watch dist/db/app.json",
-"watch": "npm-run-all build build-dev -p watch:* server",
-"watch:browsersync": "browser-sync start --server dist --files \"dist/**/*\" --ignore \"dist/db/**/*\"",
-```
-
-Połączenie z lokalnym serwerem jest znacznie szybsze, niż z serwerem funkcjonującym w internecie (zdalnym), więc dodaliśmy opóźnienie `250ms` (1/4 sekundy), tak aby efekt był bardziej realistyczny.
-
-Zauważ, że tym samym będziemy posiadać już dwa serwery. Jeden (`localhost:3000`) serwuje naszą stronę, drugi (`localhost:3131`) udostępnia endpointy do komunikacji z bazą danych.
-
-### Test API
-
-Możesz zastanawiać się jakiej metody użyła przeglądarka, wchodząc na ten endpoint (adres). Dlaczego uznała, że użyliśmy metody **GET**? Z prostego powodu. Gdy wchodzimy na jakiś adres w przeglądarce, to zawsze domyślnie wykorzystywana jest właśnie ta metoda.
-
-Plik z danymi stworzyliśmy w katalogu `src/db`, ale serwer korzysta z pliku `dist/db/app.json`. Jeśli zechcesz ręcznie zmienić zawartość pliku z danymi, zmieniaj wyłącznie plik `src/db/app.json`. Zostanie on automatycznie skopiowany do `dist/db`, a API natychmiast zacznie korzystać z nowej wersji pliku.
-
-### Pobieranie danych z API
-
-Czas w końcu rozkazać JS-owi, aby połączył się z tym endpointem.
-Użyjemy do tego celu wbudowanej funkcji `fetch`.
-Najprościej możemy jednak rozumieć funkcję schowaną w pierwszym `.then` jako funkcję, która uruchomi się **wtedy, gdy request się zakończy, a serwer zwróci odpowiedź**.
-
-![image](https://uploads.kodilla.com/bootcamp/fer/08.ajax-api/fer-08-14.png)
-
-Najpierw za pomocą funkcji `fetch` wysyłamy zapytanie (request) pod podany adres endpointu. Następnie otrzyma odpowiedź, która jak już wiesz, jest w formacie JSON. Widzieliśmy to wcześniej w przeglądarce. Dalej konwertujemy więc tę odpowiedź na obiekt JS-owy. Wreszcie, po otrzymaniu skonwertowanej odpowiedzi `parsedResponse`, wyświetlamy ją w konsoli.
-
-`fetch` domyślnie korzysta z metody `GET`.
-
-Połączyliśmy się z tym samym serwerem, tym samym endpointem, przy użyciu tej samej metody. Tyle że tym razem zrobiliśmy to asynchronicznie, z poziomu już załadowanej strony i to bez potrzeby przeładowywania czegokolwiek.
-
-Składnia  `fetch`  z  `then`  może na razie wydawać się trochę specyficzna, ale możesz zrozumieć całość jako prosty rozkaz:
-
-1.  Połącz się z adresem  `url`  przy użyciu metody  `fetch`.
-2.  Jeśli połączenie się zakończy, to wtedy (pierwsze  `.then`) skonwertuj dane do obiektu JS-owego.
-3.  Kiedy i ta operacja się zakończy, to wtedy (drugie  `.then`) pokaż w konsoli te skonwertowane dane.
-
-### Podsumowanie
-
-Przełącz teraz narzędzia developerskie z _Console_ na _Network_.
-kliknij ikonę filtra
-w polu _Filter_ wpisz `products`.
-kliknij nazwę znalezionego połączenia
-
-W sekcji _General_ znajdują się najważniejsze nagłówki naszego zapytania – takie jak np. adres, z którym się połączyliśmy. Bardzo ważną pozycją jest _Status Code_, w której znajdziesz [kod odpowiedzi HTTP](https://pl.wikipedia.org/wiki/Kod_odpowiedzi_HTTP), informujący o tym, czy połączenie się powiodło (kod 200), czy np. nie znaleziono takiego adresu (kod 404) lub nie możemy zobaczyć tej treści bez zalogowania (kod 403).
-
-> Każde zapytanie do serwera i każda jego odpowiedź zawiera nagłówek (_header_) oraz opcjonalnie treść (_body_). W nagłówku znajdziesz parametry tego zapytania. Większość z nich jest automatycznie nadawana przez przeglądarkę lub serwer, ale niektóre z nich będą również nadawane przez nas – przekonasz się o tym, gdy będziemy wysyłać zamówienie do API.
-
-Kolejnym miejscem, które zawiera wartościowe informacje, jest zakładka _Preview_, w której znajdziesz treść odpowiedzi z serwera.
-
-## 9.9.  Wysyłanie zamówienia do API
-
-### Nowa kolekcja w bazie danych
-
-Wystarczy, że dodasz do pliku `app.json` nową pustą tablicę o nazwie `orders` i tak naprawdę... to tyle. Od teraz JSON-server w momencie uruchomienia będzie tworzył bazę danych złożoną już z dwóch kolekcji (`products` i `orders`) oraz udostępni endpointy do ich obsługi.
-
-### Wychwycenie submitu formularza
-
-```js
-const options = {
-  method: 'POST',
-  headers: {
-    'Content-Type': 'application/json',
+const employees = {
+  john: {
+    name: 'John Doe',
+    salary: 3000
   },
-  body: JSON.stringify(payload),
-};
-
-fetch(url, options);
+  amanda: {
+    name: 'Amanda Doe',
+    salary: 4000
+  },
+}
 ```
 
-![image](https://uploads.kodilla.com/bootcamp/fer/08.ajax-api/fer-08-15.png)
+Należy wygenerować 2 nowe tablice: `employeesNames` dla imion pracowników, `employeesSalaries` dla pensji pracowników.
 
-### Zadanie:  agregacja danych z koszyka
+Rozwiązanie: for..in, split
+```js
+const employeesNames = [];
+const employeesSalaries = [];
 
-## 9.10.  Podsumowanie
+for(const employeeId in employees) {
+  const employee = employees[employeeId];
 
-### Dla chętnych
+  // split name at ' ' and get first element
+  // (John Doe -> ['John', 'Doe'] -> 'John')
+  const name = employee.name.split(' ')[0];
+  employeesNames.push(name);
+  employeesSalaries.push(employee.salary);
+}
+```
 
-## 9.11.  Quiz powtórkowy
+#### Ćwiczenie 3
+
+```js
+const salaries = [2000, 3000, 1500, 6000, 3000];
+```
+
+-   suma wszystkich pensji: array.reduce
+```js
+const sum = salaries.reduce((total, salary) => total + salary, 0);
+```
+
+-   najniższa pensja: spread operator, Math.min, alternatywnie reduce
+```js
+const lowestSalary = Math.min(...salaries);
+
+// alternatywnie
+const lowestSalary = salaries.reduce((min, salary) =>  Math.min(min, salary), Infinity);
+```
+-   najwyższa pensja: spread operator, Math.max, alternatywnie reduce
+```js
+const highestSalary = Math.max(...salaries);
+
+// alternatywnie
+const highestSalary = salaries.reduce((max, salary) =>  Math.max(max, salary), -Infinity);
+```
+
+#### Ćwiczenie 4
+
+```js
+const persons = {
+  john: 2000,
+  amanda: 3000,
+  thomas: 1500,
+  james: 6000,
+  claire: 3000
+};
+```
+
+Zadanie można rozwiązać tak samo, jak powyżej, jeżeli zastosuje się `Object.values(persons)`, które utworzy tablice wartości (tu pensji).
+
+Alternatywnie można skorzystać z Object.keys
+```js
+const sum = Object.keys(persons).reduce((total, person) => total + persons[person], 0);
+```
+
+Rozwiązanie  dla sumy pensji bez używania Object:
+```js
+let sum = 0;
+for (let person in persons) { 
+	sum += persons[person];
+}
+```
+
+Obliczanie najniższej i najwyższej pensji:
+```js
+let lowestSalary = Infinity;
+let highestSalary = -Infinity;
+
+for (let person in persons) {
+  const salary = persons[person];
+  if (salary < lowestSalary) {
+    lowestSalary = salary;
+  }
+  if (salary > highestSalary) {
+    highestSalary = salary;
+  }
+}
+```
+
+Alternatywnie z Object.values:
+```js
+const salaries = Object.values(persons);
+const lowestSalary = Math.min(...salaries);
+const highestSalary = Math.max(...salaries);
+```
+
+#### Ćwiczenie 5
+
+```js
+const tags = ['news', 'code', 'news', 'sport', 'hot', 'news', 'code'];
+```
+
+Należy na podstawie powyższej tablicy utworzyć taki obiekt:
+```js
+{
+  news: { appearances: 3 },
+  code: { appearances: 2 },
+  sport: { appearances: 1 },
+  hot: { appearances: 1 },
+}
+```
+
+Rozwiązanie:
+```js
+const tagsObj = {};
+
+for (const tag of tags) {
+    if (!tagsObj.hasOwnProperty(tag)) {
+        tagsObj[tag] = { appearance: 1 };        
+    } else {
+        tagsObj[tag].appearance++;
+    }
+}
+```
+
+### Praca z funkcjami
+
+#### Ćwiczenie 1
+
+```js
+const foo = 4;
+
+function Bar() {
+  const foo = 5;
+  const spam = 6;
+  console.log(foo, spam, eggs);
+
+  function Baz() {
+    const spam = 7;
+    const eggs = 8;
+    console.log(foo, spam);
+  }
+}
+```
+
+1. Funkcja `Baz` może mieć dostęp do stałych `foo` oraz `spam` z zakresu funkcji `Bar`.
+2. Funkcja `Bar` nie ma dostępu do stałej `eggs` z zakresu `Baz`.
+3. Deklarowanie stałej `foo` w obu zakresach nie spowoduje błędu.
+4. Po uruchomieniu `Baz`, `foo` przyjmie wartość 5.
+
+#### Ćwiczenie 2
+
+```js
+const foo = 4;
+
+function Bar(param) {
+  const baz = 5;
+  if(param === 1) {
+    const spam = 6;
+  }
+}
+```
+
+Mówimy o zakresie globalnym. Każde dodatkowe ciało zamknięte w nawiasach `{}` tworzy dodatkowy zakres. W powyższym przykładzie będą istniały 3 zakresy:
+- zakres globalny;
+- zakres funkcji `Bar`;
+- zakres instrukcji warunkowej `if`;
+
+#### Ćwiczenie 3
+
+```js
+'use strict';
+
+const foo = function() {
+  console.log(this);
+}
+
+const obj = {
+  foo: foo
+}
+
+foo();
+foo.call(5);
+obj.foo();
+```
+
+- `foo()` zwróci `this` dla obiektu globalnego, w tym przypadku `undefined` <- `default rule`;
+- `foo.call(5)` ustawi dla `this` wartość 5;
+- `obj.foo()` ustawi dla this wartośc obiektu, na którym funkcja jest wywoływana;
+
+#### Ćwiczenie 4
+
+```js
+const employees = [
+  { name: 'Amanda Doe', salary: 3000 },
+  { name: 'John Doe', salary: 4000 },
+  { name: 'Claire Downson', salary: 2000 },
+  { name: 'Freddie Clarkson', salary: 6000 },
+  { name: 'Thomas Delaney', salary: 8200 }
+];
+
+const filteredEmployees = filterEmployees(employees, 2000, 8000);
+console.log(filteredEmployees);
+/* It should return
+[{
+  { name: 'Amanda Doe', salary: 3000 },
+  { name: 'John Doe', salary: 4000 },
+  { name: 'Freddie Clarkson', salary: 6000 },
+}];*/
+```
+
+Rozwiązanie:
+```js
+const filterEmployees = (arr, min, max) => {
+    return arr.filter(item => {
+        if (item.salary > 2000 && item.salary < 8000) return item;
+    });
+};
+```
+
+#### Ćwiczenie 5
+
+Należy napisać funkcję, która wyświetli wszystkie właściwości i ich wartości dla podanego obiektu.
+
+```js
+const showObj = (obj) => {
+    let output = '';
+    
+    for (const property in obj) {
+        output += `${property}: ${obj[property]}\n`;
+    }
+    
+    return output;
+};
+```
+
+#### Ćwiczenie 6
+
+Należy napisać funkcję `forEach`, która przyjmie dwa argumenty: tablicę i funkcję callback. Funkcja ma przejść po każdym elemencie tablicy i wywołać na nim funkcję callback:
+
+Rozwiązanie:
+
+```js
+function forEach(arr, cb) {
+  for(const elem of arr) {
+    cb(elem);
+  }
+}
+```
+
+#### Ćwiczenie 7
+
+Napisz funkcję `formatName`, która przyjmie w argumencie imię i nazwisko, a następnie zwróci poprawioną jego formę. Poprawioną, czyli taką, w której tylko pierwsza litera imienia i nazwiska będą duże, a pozostałe małe.
+
+```js
+formatName('aMAnDa dOE'); // returns Amanda Doe
+formatName('AMANDA DOE'); // returns Amanda Doe
+formatName('john DOE'); // returns John Doe
+```
+
+Rozwiązanie:
+
+```js
+function formatName(name) {
+  return name.replace(/[A-Z]/g, (match) => match.toLowerCase()).replace(/\b\w/g, (match) => match.toUpperCase());
+}
+```
+
+#### Ćwiczenie 8
+
+Przygotuj funkcję  `getEvensInRange`, która przyjmie dwa argumenty:
+
+-   liczbę wskazującą początek zakresu do sprawdzenia,
+-   liczbę wskazującą jego koniec.
+
+Zadaniem funkcji jest przejście po wszystkich liczbach wewnątrz podanego zakresu i zwrócenie tablicy, która będzie zawierać tylko te, które są parzyste.
+
+```js
+getEvensInRange(0, 9); // returns [0, 2, 4, 6, 8]
+getEvensInRange(7, 12); // returns [8, 10, 12]
+```
+
+Rozwiązanie:
+
+```js
+const getEvensInRange = (start, end) => {
+    const arr = [];
+    for (let i = start; i <= end; i++) {
+        if (i % 2 === 0) {
+            arr.push(i);
+        }
+    }
+    return arr;
+}
+```
+
+#### Ćwiczenie 9
+
+Twoim zadaniem jest napisanie funkcji o nazwie `filter`, która przyjmie dwa argumenty – dowolną tablicę oraz funkcję callback. Celem funkcji jest zwrócenie nowej przefiltrowanej tablicy, w której znajdą się tylko te elementy, dla których przekazana funkcja callback zwróci `true`.
+
+Rozwiązanie:
+```js
+const filter = (arr, cb) => {
+    const newArr = [];
+    for (const item of arr) {
+        if (cb(item)) newArr.push(item);
+    }
+    return newArr;
+}
+```
+
+### Podsumowanie
+
+## 10.2.  Manipulacja DOM-em i powtórka z OOP
